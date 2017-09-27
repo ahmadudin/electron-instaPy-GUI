@@ -1,0 +1,30 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+label {
+  font-size: 1em !important;
+  color: #757575 !important;
+}
+.ui.checkbox label {
+  font-size: 0.8em !important;
+  color: #757575 !important;
+}
+.selected label {
+  color: #ffffff !important;
+}
+.selected .ui.checkbox label {
+  color: #ffffff !important;
+}
+.ui.message {
+  box-shadow: none;
+  background: rgba(170, 183, 187, 0.23);
+}
+.ui.checkbox {
+  margin: 0em 0em 0.28571429rem 0em;
+}
+.ui.form .inline.fields {
+  /* margin: 0; */
+}
+.ui.message.selected {
+    background-color: #2185d0;
+}
