@@ -1,0 +1,23 @@
+{
+  "name": "InstaPy-GUI",
+  "version": "1.0.0",
+  "description": "A minimal InstaPy GUI",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/",
+  "keywords": [
+    "Electron"
+  ],
+  "author": "ahmadudin",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  },
+  "dependencies": {
+    "dedent-js": "^1.0.1",
+    "electron-reload": "^1.2.1",
+    "fs-jetpack": "^1.2.0"
+  }
+}
