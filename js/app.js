@@ -28,10 +28,10 @@ var app = {
             from instapy import InstaPy
             \nsession = InstaPy(username='', password='')
             \nsession.login()
-            ${restrictTag}1${restrictUser}2${excludeFriends}3${ignoreRestrict}4
-            ${fLiked}5${comments}6${followCount}7${interact}7.5
-            ${byTags}8${byImages}9${byLocations}10
-            ${fFollowers}11${fFollowing}12${fUsers}13${unfollowUsers}14
+            ${restrictTag}${restrictUser}${excludeFriends}${ignoreRestrict}
+            ${fLiked}${comments}${followCount}${interact}
+            ${byTags}${byImages}${byLocations}
+            ${fFollowers}${fFollowing}${fUsers}${unfollowUsers}
             \nsession.end()
         `);
         console.log(content);
@@ -372,13 +372,6 @@ $(document).ready(function() {
         // app.comments(true);
         handler.submit();
     });
-    // input parameter
-    // generate file
-    // 1. create .py script
-    // 2. check if param selected
-    // 3. validate
-    // execute script
-    // show console
 });
 
 
