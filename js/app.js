@@ -47,7 +47,7 @@ var app = {
     },
     // format input string to match python script syntax
     parser: function(input) {
-        var parsed = "'" + input.split(', ').join("', '") + "'";
+        var parsed = "'" + input.replace(/\s+/g, '').split(',').join("', '") + "'";
 
         console.log(parsed);
         return parsed;
@@ -245,14 +245,14 @@ var app = {
             params.byTagsTags = this.parser($('#byTagsTags').val());
             params.byTagsAmount = $('#byTagsAmount').val();
 
-            if($('input[name=byTagsMedia]:checked').val() === 1) {
+            if($('input[name=byTagsMedia]:checked').val() === '1') {
                 params.byTagsMedia = "'Photo'";
-            } else if ($('#byTagsMedia').val() === 2) {
+            } else if ($('input[name=byTagsMedia]:checked').val() === '2') {
                 params.byTagsMedia = "'Video'";
             } else {
                 params.byTagsMedia = "Null";
             }
-            content = `\nsession.like_by_tags([${params.byTagsTags}], amount=${params.byTagsAmount}, media='${params.byTagsMedia}')`;
+            content = `\nsession.like_by_tags([${params.byTagsTags}], amount=${params.byTagsAmount}, media=${params.byTagsMedia})`;
         } else {
             content = ``;
         }
@@ -265,14 +265,14 @@ var app = {
             params.byImgUrl = this.parser($('#byImgUrl').val());
             params.byImgAmount = $('#byImgAmount').val();
 
-            if($('input[name=byImgMedia]:checked').val() === 1) {
+            if($('input[name=byImgMedia]:checked').val() === '1') {
                 params.byImgMedia = "'Photo'";
-            } else if ($('#byImgMedia').val() === 2) {
+            } else if ($('input[name=byImgMedia]:checked').val() === '2') {
                 params.byImgMedia = "'Video'";
             } else {
                 params.byImgMedia = "Null";
             }
-            content = `\nsession.like_from_image([${params.byImgUrl}], amount=${params.byImgAmount}, media='${params.byImgMedia}')`;
+            content = `\nsession.like_from_image([${params.byImgUrl}], amount=${params.byImgAmount}, media=${params.byImgMedia})`;
         } else {
             content = ``;
         }
@@ -285,14 +285,14 @@ var app = {
             params.byLocUrl = this.parser($('#byLocUrl').val());
             params.byLocAmount = $('#byLocAmount').val();
 
-            if($('input[name=byLocMedia]:checked').val() === 1) {
+            if($('input[name=byLocMedia]:checked').val() === '1') {
                 params.byLocMedia = "'Photo'";
-            } else if ($('#byLocMedia').val() === 2) {
+            } else if ($('input[name=byLocMedia]:checked').val() === '2') {
                 params.byLocMedia = "'Video'";
             } else {
                 params.byLocMedia = "Null";
             }
-            content = `\nsession.like_by_locations([${params.byLocUrl}], amount=${params.byLocAmount}, media='${params.byLocMedia}')`;
+            content = `\nsession.like_by_locations([${params.byLocUrl}], amount=${params.byLocAmount}, media=${params.byLocMedia})`;
         } else {
             content = ``;
         }
