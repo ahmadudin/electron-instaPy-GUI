@@ -9,19 +9,30 @@ var app = {
         var check = params.check;
         var restrictTag = app.restrictTags(check.restrictTags_on);
         var restrictUser = app.restrictUsers(check.restrictUsers_on);
+        var excludeFriends = app.excludeFriends(check.excludeFriends_on);
+        var ignoreRestrict = app.ignoreRestrict(check.ignoreRestrict_on);
+        var interact = app.interact(check.interact_on);
+        var fLiked = app.fLiked(check.fLiked_on);
+        var comments = app.comments(check.comments_on);
+        var followCount = app.followCount(check.followCount_on);
         var fFollowers = app.fFollowers(check.fFollowers_on);
-        console.log(restrictTag);
-        console.log(restrictUser);
-        console.log(fFollowers);
+        var fFollowing = app.fFollowing(check.fFollowing_on);
+        var fUsers = app.fUsers(check.fUsers_on);
+        var unfollowUsers = app.unfollowUsers(check.unfollowUsers_on);
+        var byTags = app.byTags(check.byTags_on);
+        var byImages = app.byImages(check.byImg_on);
+        var byLocations = app.byLocations(check.byLoc_on);
 
         // Python script template
         var content = dedent(`
-                                from instapy import InstaPy
-                                \nsession = InstaPy(username='', password='')
-                                \nsession.login()
-                                ${restrictTag} ${restrictUser}
-                                ${fFollowers}
-                                \nsession.end()
+            from instapy import InstaPy
+            \nsession = InstaPy(username='', password='')
+            \nsession.login()
+            ${restrictTag}1${restrictUser}2${excludeFriends}3${ignoreRestrict}4
+            ${fLiked}5${comments}6${followCount}7${interact}7.5
+            ${byTags}8${byImages}9${byLocations}10
+            ${fFollowers}11${fFollowing}12${fUsers}13${unfollowUsers}14
+            \nsession.end()
         `);
         console.log(content);
         return content;
@@ -91,7 +102,7 @@ var app = {
 
         if (on) {
             params.ignoreRestrict = this.parser($('#ignoreRestrict').val());
-            content = `\nsession.set_ignore_if_contains([${params.IgnoreRestrict}])`;
+            content = `\nsession.set_ignore_if_contains([${params.ignoreRestrict}])`;
         } else {
             content = ``;
         }
@@ -99,18 +110,29 @@ var app = {
         return content;
     },
     interact: function(on) {
-        
+        var content = ``;
+
+        if (on) {
+            params.interactAmount = $('#fLikedPercent').val();
+            params.interactPercent = $('#fLikedTimes').val();
+            if ($('#interactRandom').val()) {
+                params.interactRandom = 'True';
+            } else {
+                params.interactRandom = 'False';
+            }
+            content = `\nsession.set_user_interact(amount=${params.interactAmount}, random=${params.interactRandom}, percentage=${params.interactPercent})`;
+        } 
+
+        return content;
     },
     fLiked: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.fLikedPercent = $('#fLikedPercent').val();
             params.fLikedTimes = $('#fLikedTimes').val();
-            content = `\nset_do_follow(enabled=True, percentage=${params.fLikedPercent}, times=${params.fLikedTimes})`;
-        } else {
-            content = ``;
-        }
+            content = `\nsession.set_do_follow(enabled=True, percentage=${params.fLikedPercent}, times=${params.fLikedTimes})`;
+        } 
 
         return content;
     },
@@ -132,7 +154,7 @@ var app = {
         } else {
             content = ``;
         }
-        console.log(content);
+        // console.log(content);
         return content;
     },
     followCount: function(on) {
@@ -187,7 +209,7 @@ var app = {
             if (params.check.interact_on) {
                 interact = 'True';
             }
-            content = `\nsession.follow_user_followers([${params.fFollowingUsers}], amount=${params.fFollowingAmount}, delay=${params.fFollowingDelay}, random=${params.fFollowingRandom}), interact=${interact}`;
+            content = `\nsession.follow_user_following([${params.fFollowingUsers}], amount=${params.fFollowingAmount}, delay=${params.fFollowingDelay}, random=${params.fFollowingRandom}, interact=${interact})`;
         } else {
             content = ``;
         }
@@ -199,7 +221,7 @@ var app = {
 
         if (on) {
             params.fUsers = this.parser($('#fUsers').val());
-            content = `\nsession.follow_by_list([${params.fUsers}]], times=1)`
+            content = `\nsession.follow_by_list([${params.fUsers}], times=1)`
         } else {
             content = ``;
         }
@@ -209,8 +231,8 @@ var app = {
         var content;
 
         if (on) {
-            params.unfollowUsers = this.parser($('#fUsers').val());
-            content = `\nsession.follow_by_list([${params.unfollowUsers}]], times=1)`;
+            params.unfollowAmount = $('#unfollowAmount').val();
+            content = `\nsession.unfollow_users(amount=${params.unfollowAmount})`;
         } else {
             content = ``;
         }
@@ -223,7 +245,7 @@ var app = {
             params.byTagsTags = this.parser($('#byTagsTags').val());
             params.byTagsAmount = $('#byTagsAmount').val();
 
-            if($('#byTagsMedia').val() === 1) {
+            if($('input[name=byTagsMedia]:checked').val() === 1) {
                 params.byTagsMedia = "'Photo'";
             } else if ($('#byTagsMedia').val() === 2) {
                 params.byTagsMedia = "'Video'";
@@ -240,10 +262,10 @@ var app = {
         var content;
 
         if (on) {
-            params.byImgUrl = $('#byImgUrl').val();
+            params.byImgUrl = this.parser($('#byImgUrl').val());
             params.byImgAmount = $('#byImgAmount').val();
 
-            if($('#byImgMedia').val() === 1) {
+            if($('input[name=byImgMedia]:checked').val() === 1) {
                 params.byImgMedia = "'Photo'";
             } else if ($('#byImgMedia').val() === 2) {
                 params.byImgMedia = "'Video'";
@@ -256,14 +278,14 @@ var app = {
         }
         return content;
     },
-    byLocation: function(on) {
+    byLocations: function(on) {
         var content;
 
         if (on) {
             params.byLocUrl = this.parser($('#byLocUrl').val());
             params.byLocAmount = $('#byLocAmount').val();
 
-            if($('#byLocMedia').val() === 1) {
+            if($('input[name=byLocMedia]:checked').val() === 1) {
                 params.byLocMedia = "'Photo'";
             } else if ($('#byLocMedia').val() === 2) {
                 params.byLocMedia = "'Video'";
@@ -282,11 +304,11 @@ var params = {
     check: {
         restrictTags_on: '',
         restrictUsers_on: '',
-        excludeFriend_on: '',
+        excludeFriends_on: '',
         ignoreRestrict_on: '',
         interact_on: '',
         fLiked_on: '',
-        comment_on: '',
+        comments_on: '',
         followCount_on: '',
         byTags_on: '',
         byImg_on: '',
@@ -294,7 +316,7 @@ var params = {
         fUsers_on: '',
         fFollowers_on: '',
         fFollowing_on: '',
-        unfollow_on: ''
+        unfollowUsers_on: ''
     },
     restrictTags: '',
     restrictUsers: '',
@@ -326,7 +348,7 @@ var params = {
     fFollowingAmount: '',
     fFollowingDelay: '',
     fFollowingRandom: '',
-    unfollowUsers: '',
+    unfollowAmount: '',
     interactRandom: '',
     interactAmount: '',
     interactPercent: ''
@@ -347,8 +369,8 @@ var handler = {
 $(document).ready(function() {
     // Run button event listener
     $('#fireButton').click(function() {
-        app.comments(true);
-        // handler.submit();
+        // app.comments(true);
+        handler.submit();
     });
     // input parameter
     // generate file
