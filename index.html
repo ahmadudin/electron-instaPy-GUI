@@ -170,19 +170,19 @@
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                    <input type="radio" name="byImages_media">
+                                    <input type="radio" name="byImgMedia" value="1">
                                     <label>Photo</label>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                    <input type="radio" name="byImages_media">
+                                    <input type="radio" name="byImgMedia" value="2">
                                     <label>Video</label>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                    <input type="radio" name="byImages_media" checked="checked">
+                                    <input type="radio" name="byImgMedia" checked="checked" value="3">
                                     <label>Both</label>
                                     </div>
                                 </div>
@@ -212,19 +212,19 @@
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                    <input type="radio" name="byLoc_media">
+                                    <input type="radio" name="byLocMedia" value="1">
                                     <label>Photo</label>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                    <input type="radio" name="byLoc_media">
+                                    <input type="radio" name="byLocMedia" value="2">
                                     <label>Video</label>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                    <input type="radio" name="byLoc_media" checked="checked">
+                                    <input type="radio" name="byLocMedia" checked="checked" value="3">
                                     <label>Both</label>
                                     </div>
                                 </div>
@@ -279,15 +279,15 @@
                                                     <input id="commentsPercent" name="cl_percent" type="number" placeholder="70">
                                                 </div>
                                             </div>
-                                            <div class="field">
+                                            <div class="three wide field">
                                                 <div class="ui radio checkbox">
-                                                    <input type="radio" name="cl_photo">
+                                                    <input type="radio" name="commentsMedia">
                                                     <label>Photo</label>
                                                 </div>
                                             </div>
-                                            <div class="field">
+                                            <div class="two wide field">
                                                 <div class="ui radio checkbox">
-                                                    <input type="radio" name="cl_video">
+                                                    <input type="radio" name="commentsMedia">
                                                     <label>Video</label>
                                                 </div>
                                             </div>
@@ -317,20 +317,20 @@
                                     </div>
                                     <div class="disabled field" id="followCount">
                                         <div class="inline fields">
-                                            <div class="six wide field">
+                                            <div class="seven wide field">
                                                 <label for="">Upper follower count</label>
                                             </div>
-                                            <div class="ten wide field">
+                                            <div class="nine wide field">
                                                 <div class="ui input">
                                                     <input id="upperCount" name="fc_upper" type="number" placeholder="250">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="inline fields">
-                                            <div class="six wide field">
+                                            <div class="seven wide field">
                                                 <label for="">Lower follower count</label>
                                             </div>
-                                            <div class="ten wide field">
+                                            <div class="nine wide field">
                                                 <div class="ui input" id="">
                                                     <input id="lowerCount" name="fc_lower" type="number" placeholder="100">
                                                 </div>
@@ -460,7 +460,7 @@
                                         </div>
                                         <div class="fourteen wide field">
                                             <div class="ui input">
-                                                <input id="unfollowUsers" name="unFollow_user" type="text" placeholder="username1, username2">
+                                                <input id="unfollowAmount" name="unFollow_user" type="number" placeholder="30">
                                             </div>
                                         </div>
                                     </div>
@@ -505,7 +505,7 @@
             <!-- FOOTER -->
             <div class="ui two column centered grid" style="margin-top: 30px; border-top: #e8e2e2 1px solid; padding-top:10px; background-color: white; width: 100%">
                 <div class="middle aligned row">
-                    <button class="ui huge primary button">RUN</button>
+                    <button id="fireButton" class="ui huge primary button">RUN</button>
                 </div>    
                 <div class="middle aligned row">
                     <svg class="ui small image" style="color:hsl(0,0%,66%)">
