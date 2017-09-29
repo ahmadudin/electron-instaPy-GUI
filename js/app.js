@@ -59,6 +59,9 @@ var app = {
             console.log(params.check[i]);
         }
     },
+    validate: function() {
+
+    },
     /* --------- INPUT PROCESSING --------- */
     restrictTags: function(on) {
         var content;
@@ -318,6 +321,8 @@ var params = {
         fFollowing_on: '',
         unfollowUsers_on: ''
     },
+    username: '',
+    password: '',
     restrictTags: '',
     restrictUsers: '',
     excludeFriends: '',
@@ -368,10 +373,19 @@ var handler = {
 
 $(document).ready(function() {
     // Run button event listener
-    $('#fireButton').click(function() {
-        // app.comments(true);
-        handler.submit();
+    // $('#fireButton').click(function() {
+    //     // app.comments(true);
+    //     handler.submit();
+    // });
+    $("#myform").submit(function(e) {
+        e.preventDefault();
+        if( $('#myform').form('is valid')) {
+            handler.submit();
+        } else {
+            console.log('at least place a tag!');
+        }
     });
+    
 });
 
 
