@@ -2,59 +2,60 @@
 <html>
     <head>
         <title>InstaPy GUI</title>
-        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        <link rel="stylesheet" href="css/item.css">
-        <link rel="stylesheet" href="css/form.css">
-        <link rel="stylesheet" href="css/image.css">
-        <link rel="stylesheet" href="css/input.css">
-        <link rel="stylesheet" href="css/grid.css">
-        <link rel="stylesheet" href="css/sticky.css">
-        <link rel="stylesheet" href="css/button.css">
-        <link rel="stylesheet" href="css/checkbox.css">
+        <link rel="stylesheet" href="assets/css/item.css">
+        <link rel="stylesheet" href="assets/css/form.css">
+        <link rel="stylesheet" href="assets/css/image.css">
+        <link rel="stylesheet" href="assets/css/input.css">
+        <link rel="stylesheet" href="assets/css/grid.css">
+        <link rel="stylesheet" href="assets/css/sticky.css">
+        <link rel="stylesheet" href="assets/css/button.css">
+        <link rel="stylesheet" href="assets/css/checkbox.min.css">
+        <link rel="stylesheet" href="assets/css/icon.css"> 
         <!-- //size:62 -->
-        <link rel="stylesheet" href="css/message.css">
+        <link rel="stylesheet" href="assets/css/message.css">
         <!-- //border: -->
-        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
         
     </head>
     <body>
         <div class="ui container">
             <div id="conts" class="ui segment" style="padding:0 20px">
-                <div class="ui sticky fixed top" style="width: 100%;">    
-                    <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid; padding-top:10px; background-color: white">
-                        <div class="row">
-                            <div class="four wide left floated middle aligned column">
-                                <img src="logo-GUI.png" alt="" class="ui small image">
-                            </div>
-                            <div class="ten wide column">
-                                <div class="ui mini form">
+                <form id="myform" class="ui mini form">
+                    <!-- HEADER & LOGIN -->
+                    <div class="ui sticky fixed top" style="width: 100%;">    
+                        <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid; padding-top:10px; background-color: white">
+                            <div class="row">
+                                <div class="four wide left floated middle aligned column">
+                                    <img src="assets/img/logo-GUI.png" alt="" class="ui small image">
+                                </div>
+                                <div class="ten wide column">
                                     <div class="field">
                                         <div class="ui message" style="background: white">
                                         <div class="two fields">
                                             <div class="field">
                                                 <div class="ui left labeled icon input">
-                                                <input name="username" type="text" placeholder="Username">
+                                                <input id="username" name="username" form="myform" type="text" placeholder="Username">
                                                 <i class="user icon"></i>
                                                 </div>
                                             </div>
                                             <div class="field">
                                                 <div class="ui left labeled icon input">
-                                                <input name="password" type="password" placeholder="Password">
+                                                <input id="password" name="password" form="myform" type="password" placeholder="Password">
                                                 <i class="lock icon"></i>
                                                 </div>
                                             </div>
                                         </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="ui mini form" style="margin-top: 100px">
                     <!-- SETTINGS  -->
-                    <div class="field">
+                    <div class="field" style="margin-top: 100px;">
                         <div class="field">
                             <div class="field">
                                 <div class="ui message" id="settings">
@@ -106,7 +107,7 @@
                         <div class="field">
                             <div class="ui message selected">
                                 <div class="ui checkbox">
-                                    <input id="byTags_on" type="checkbox" name="byTags_cb" checked="checked">
+                                    <input id="byTags_on" type="checkbox" name="byTags_on" checked="checked">
                                     <label>Like by Tags</label>
                                 </div>
                                 <div class="inline fields" id="byTags">
@@ -500,12 +501,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div id="error" class="ui error message">
+                    </div>
+                </form>
             </div>
             <!-- FOOTER -->
             <div class="ui two column centered grid" style="margin-top: 30px; border-top: #e8e2e2 1px solid; padding-top:10px; background-color: white; width: 100%">
                 <div class="middle aligned row">
-                    <button id="fireButton" class="ui huge primary button">RUN</button>
+                    <button id="fireButton" form="myform" class="ui huge primary button">RUN</button>
                 </div>    
                 <div class="middle aligned row">
                     <svg class="ui small image" style="color:hsl(0,0%,66%)">
@@ -517,17 +520,62 @@
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="js/sticky.js"></script>
-    <script src="js/checkbox.js"></script>
-    <script src="js/form.js"></script>
+    <script src="assets/js/sticky.js"></script>
+    <script src="assets/js/checkbox.js"></script>
+    <script src="assets/js/form.js"></script>
     <script>
     // You can also require other files to run in this process
-    require('./js/app.js')
-    require('./js/renderer.js')
+    require('./assets/js/app.js')
+    require('./assets/js/renderer.js')
     $('.ui.sticky')
     .sticky({
-        context: ''
+        context: 'form'
     })
-;
+
+    $('.error.message')
+    .on('click', function() {
+        $('#myform').find('.ui.error.message ul').remove();
+        $('#myform').find('.prompt').remove();
+    })
+    
+
+    $("#myform").submit(function(e) {
+        e.preventDefault();
+    })
+
+    $('#myform').form({
+        on: 'blur',
+        inline: false,
+        fields: {
+            username: {
+                identifier: 'username',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter your name'
+                }
+                ]
+            },
+            password: {
+                identifier: 'password',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter your name'
+                }
+                ]
+            },
+            amount: {
+                identifier: 'byTagsAmount',
+                depends: 'byTags_on',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter your name'
+                }
+                ]
+            }
+        }
+    })
   </script>
 </html>
