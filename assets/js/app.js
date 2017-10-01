@@ -1,5 +1,72 @@
 const fs = require('fs');
 const dedent = require('dedent-js');
+const Store = require('electron-store');
+const ipcRenderer = require('electron').ipcRenderer;
+
+
+
+var data = {
+    check: {
+        restrictTags_on: true,
+        restrictUsers_on: '',
+        excludeFriends_on: '',
+        ignoreRestrict_on: '',
+        interact_on: '',
+        fLiked_on: '',
+        comments_on: '',
+        followCount_on: '',
+        byTags_on: '',
+        byImg_on: '',
+        byLoc_on: '',
+        fUsers_on: '',
+        fFollowers_on: '',
+        fFollowing_on: '',
+        unfollowUsers_on: ''
+    },
+    username: '',
+    password: '',
+    restrictTags: '',
+    restrictUsers: '',
+    excludeFriends: '',
+    ignoreRestrict: '',
+    fLikedPercent: '',
+    fLikedTimes: '',
+    commentPercent: '',
+    comments: '',
+    commentsMedia: '',
+    commentsEmoji: '',
+    upperCount: '',
+    lowerCount: '',
+    byTagsTags: '',
+    byTagsAmount: '',
+    byTagsMedia: '',
+    byImgUrl: '',
+    byImgAmount: '',
+    byImgMedia: '',
+    byLocUrl: '',
+    byLocAmount: '',
+    byLocMedia: '',
+    fUsersLists: '',
+    fFollowersUsers: '',
+    fFollowersAmount: '',
+    fFollowersDelay: '',
+    fFollowersRandom: '',
+    fFollowingUsers: '',
+    fFollowingAmount: '',
+    fFollowingDelay: '',
+    fFollowingRandom: '',
+    unfollowAmount: '',
+    interactRandom: '',
+    interactAmount: '',
+    interactPercent: ''
+};
+
+const store = new Store({
+    name: 'instaPy-user',
+    defaults: data
+})
+
+var params = {};
 
 var app = {
     params : [],
@@ -303,61 +370,7 @@ var app = {
     }
 };
 
-var params = {
-    check: {
-        restrictTags_on: '',
-        restrictUsers_on: '',
-        excludeFriends_on: '',
-        ignoreRestrict_on: '',
-        interact_on: '',
-        fLiked_on: '',
-        comments_on: '',
-        followCount_on: '',
-        byTags_on: '',
-        byImg_on: '',
-        byLoc_on: '',
-        fUsers_on: '',
-        fFollowers_on: '',
-        fFollowing_on: '',
-        unfollowUsers_on: ''
-    },
-    username: '',
-    password: '',
-    restrictTags: '',
-    restrictUsers: '',
-    excludeFriends: '',
-    ignoreRestrict: '',
-    fLikedPercent: '',
-    fLikedTimes: '',
-    commentPercent: '',
-    comments: '',
-    commentsMedia: '',
-    commentsEmoji: '',
-    upperCount: '',
-    lowerCount: '',
-    byTagsTags: '',
-    byTagsAmount: '',
-    byTagsMedia: '',
-    byImgUrl: '',
-    byImgAmount: '',
-    byImgMedia: '',
-    byLocUrl: '',
-    byLocAmount: '',
-    byLocMedia: '',
-    fUsersLists: '',
-    fFollowersUsers: '',
-    fFollowersAmount: '',
-    fFollowersDelay: '',
-    fFollowersRandom: '',
-    fFollowingUsers: '',
-    fFollowingAmount: '',
-    fFollowingDelay: '',
-    fFollowingRandom: '',
-    unfollowAmount: '',
-    interactRandom: '',
-    interactAmount: '',
-    interactPercent: ''
-};
+
 
 // Interface interaction handler
 var handler = {
@@ -372,18 +385,28 @@ var handler = {
 };
 
 $(document).ready(function() {
-    // Run button event listener
-    // $('#fireButton').click(function() {
-    //     // app.comments(true);
-    //     handler.submit();
-    // });
+    // store.set(data);
+    params = store.get();
+
     $("#myform").submit(function(e) {
         e.preventDefault();
-        if( $('#myform').form('is valid')) {
-            handler.submit();
-        } else {
-            console.log('at least place a tag!');
+        // if( $('#myform').form('is valid')) {
+        //     handler.submit();
+        // } else {
+        //     console.log('at least place a tag!');
+        // }
+        // console.log(data);
+        var test = false;
+        if (params.check.restrictUsers_on) {
+            test = true;
         }
+        console.log(params.check.restrictTags_on);
+        console.log(test);
+        ipcRenderer.send('asynchronous-message', params);
+        ipcRenderer.on('asynchronous-reply', function(event, arg) {
+        console.log(arg); // prints "pong"
+        });
+        
     });
     
 });
