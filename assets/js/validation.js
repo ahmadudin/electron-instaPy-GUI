@@ -1,11 +1,11 @@
-function oneCheckVal() {
+function oneCheck() {
 	var nav = document.getElementsByClassName('omega');
 	for (var i = 0, l=nav.length;i<l;i++){
 		if(nav[i].firstElementChild.checked) {
             return true;
         }
-		
-	}
+  }
+  alert('Choose one activity at least');
 	return false
 }
 
@@ -27,7 +27,7 @@ $('#myform').form({
                 rules: [
                 {
                     type   : 'empty',
-                    prompt : 'Username cannot be empty'
+                    prompt : 'Password cannot be empty'
                 }
                 ]
             },
