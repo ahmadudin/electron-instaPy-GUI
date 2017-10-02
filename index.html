@@ -54,191 +54,184 @@
                             </div>
                         </div>
                     </div>
-                    <!-- SETTINGS  -->
-                    <div class="field" style="margin-top: 100px;">
-                        <div class="field">
+                    <div id="alpha" class="field" style="margin-top: 100px;">
+                        <!-- SETTINGS  -->
+                        <div class="ui message" id="settings">
+                            <div class="four fields">
+                                <div class="field">
+                                    <div class="ui checkbox beta">
+                                        <input id="restrictTags_on" type="checkbox" name="example">
+                                        <label>Restrict tags</label>
+                                    </div>
+                                    <div class="ui disabled input">
+                                        <input id="restrictTags" name="resetrictTag" type="text" placeholder="tag1, tag2, tag3">
+                                    </div>
+                                </div>
+                                <div class="field"> 
+                                    <div class="ui checkbox beta">
+                                        <input id="restrictUsers_on" type="checkbox" name="example">
+                                        <label>Restrict users</label>
+                                    </div>   
+                                    <div class="ui disabled input">
+                                        <input id="restrictUsers" name="restrictUser" type="text" placeholder="username1, username2, username2">  
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox beta">
+                                        <input id="ignoreRestrict_on" type="checkbox" name="example">
+                                        <label>Ignore restriction</label>
+                                    </div>
+                                    <div class="ui disabled input">
+                                        <input id="ignoreRestrict" name="ignoreRestrict" type="text" placeholder="tag1, tag2, tag3">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox beta">
+                                        <input id="excludeFriends_on" type="checkbox" name="example">
+                                        <label>Exclude friends</label>
+                                    </div>
+                                    <div class="ui disabled input">
+                                        <input id="excludeFriends" name="excludeFriend" type="text" placeholder="friend1, friend2">
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <!-- LIKE BY TAGS  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="byTags_on" type="checkbox" name="byTags_on">
+                                <label for="byTags_on">Like by Tags</label>
+                            </div>
+                            <div class="inline disabled fields" id="byTags" style="display: none;">
+                                <div class="field">
+                                    <label for="">Tags</label>
+                                </div>
+                                <div class="six wide field">
+                                    <div class="ui input">
+                                        <input id="byTagsTags" name="byTags_tags" type="text" placeholder="tag1, tag2, tag3">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="">Amount</label>
+                                </div>
+                                <div class="four wide field">
+                                    <div class="ui input">
+                                        <input id="byTagsAmount" name="byTags_amount" type="number" placeholder="50">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="byTagsMedia" value="1">
+                                        <label>Photo</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="byTagsMedia" value="2">
+                                        <label>Video</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="byTagsMedia" checked="checked" value="3">
+                                        <label>Both</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- LIKE BY IMAGES  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="byImg_on" type="checkbox" name="byImages">
+                                <label for="byImg_on">Like by Images</label>
+                            </div>
+                            <div class="inline disabled fields" id="byImg" style="display: none;">
                             <div class="field">
-                                <div class="ui message" id="settings">
-                                    <div class="four fields">
-                                        <div class="field">
-                                            <div class="ui checkbox">
-                                                <input id="restrictTags_on" type="checkbox" name="example">
-                                                <label>Restrict tags</label>
-                                            </div>
-                                            <div class="ui disabled input">
-                                                <input id="restrictTags" name="resetrictTag" type="text" placeholder="tag1, tag2, tag3">
-                                            </div>
-                                        </div>
-                                        <div class="field"> 
-                                            <div class="ui checkbox">
-                                                <input id="restrictUsers_on" type="checkbox" name="example">
-                                                <label>Restrict users</label>
-                                            </div>   
-                                            <div class="ui disabled input">
-                                                <input id="restrictUsers" name="restrictUser" type="text" placeholder="username1, username2, username2">  
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui checkbox">
-                                                <input id="ignoreRestrict_on" type="checkbox" name="example">
-                                                <label>Ignore restriction</label>
-                                            </div>
-                                            <div class="ui disabled input">
-                                                <input id="ignoreRestrict" name="ignoreRestrict" type="text" placeholder="tag1, tag2, tag3">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui checkbox">
-                                                <input id="excludeFriends_on" type="checkbox" name="example">
-                                                <label>Exclude friends</label>
-                                            </div>
-                                            <div class="ui disabled input">
-                                                <input id="excludeFriends" name="excludeFriend" type="text" placeholder="friend1, friend2">
-                                            </div>
-                                        </div> 
-                                    </div>
+                                <label for="">URL</label>
+                            </div>
+                            <div class="six wide field">
+                                <div class="ui input">
+                                <input id="byImgUrl" name="byImages_url" type="text" placeholder="www.instagram.com/image">
                                 </div>
+                            </div>
+                            <div class="field">
+                                <label for="">Amount</label>
+                            </div>
+                            <div class="four wide field">
+                                <div class="ui input">
+                                <input id="byImgAmount" name="byImages_amount" type="number" placeholder="50">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                <input type="radio" name="byImgMedia" value="1">
+                                <label>Photo</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                <input type="radio" name="byImgMedia" value="2">
+                                <label>Video</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                <input type="radio" name="byImgMedia" checked="checked" value="3">
+                                <label>Both</label>
+                                </div>
+                            </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- LIKE UTILITY -->
-                    <div class="field" id="likeUtil">
-                        <!-- LIKE ACTION -->
-                        <div class="field">
-                            <div class="ui message selected">
-                                <div class="ui checkbox">
-                                    <input id="byTags_on" type="checkbox" name="byTags_on" checked="checked">
-                                    <label>Like by Tags</label>
-                                </div>
-                                <div class="inline fields" id="byTags">
-                                    <div class="field">
-                                        <label for="">Tags</label>
-                                    </div>
-                                    <div class="six wide field">
-                                        <div class="ui input">
-                                            <input id="byTagsTags" name="byTags_tags" type="text" placeholder="tag1, tag2, tag3">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label for="">Amount</label>
-                                    </div>
-                                    <div class="four wide field">
-                                        <div class="ui input">
-                                            <input id="byTagsAmount" name="byTags_amount" type="number" placeholder="50">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="byTagsMedia" value="1">
-                                            <label>Photo</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="byTagsMedia" value="2">
-                                            <label>Video</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="byTagsMedia" checked="checked" value="3">
-                                            <label>Both</label>
-                                        </div>
-                                    </div>
+                        <!-- LIKE BY LOCATIONS  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                            <input id="byLoc_on" type="checkbox" name="byLoc_cb">
+                            <label for="byLoc_on">Like by Location</label>
+                            </div>
+                            <div class="inline disabled fields" id="byLoc" style="display: none;">
+                            <div class="field">
+                                <label for="">URL</label>
+                            </div>
+                            <div class="six wide field">
+                                <div class="ui input">
+                                <input id="byLocUrl" name="byLoc_url" type="text" placeholder="224442573/salton-sea/">
                                 </div>
                             </div>
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                    <input id="byImg_on" type="checkbox" name="byImages">
-                                    <label>Like by Images</label>
-                                </div>
-                                <div class="inline disabled fields" id="byImg" style="display: none;">
-                                <div class="field">
-                                    <label for="">URL</label>
-                                </div>
-                                <div class="six wide field">
-                                    <div class="ui input">
-                                    <input id="byImgUrl" name="byImages_url" type="text" placeholder="www.instagram.com/image">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="">Amount</label>
-                                </div>
-                                <div class="four wide field">
-                                    <div class="ui input">
-                                    <input id="byImgAmount" name="byImages_amount" type="number" placeholder="50">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                    <input type="radio" name="byImgMedia" value="1">
-                                    <label>Photo</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                    <input type="radio" name="byImgMedia" value="2">
-                                    <label>Video</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                    <input type="radio" name="byImgMedia" checked="checked" value="3">
-                                    <label>Both</label>
-                                    </div>
-                                </div>
+                            <div class="field">
+                                <label for="">Amount</label>
+                            </div>
+                            <div class="four wide field">
+                                <div class="ui input">
+                                <input id="byLocAmount" name="byLoc_amount" type="number" placeholder="50">
                                 </div>
                             </div>
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                <input id="byLoc_on" type="checkbox" name="byLoc_cb">
-                                <label>Like by Location</label>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                <input type="radio" name="byLocMedia" value="1">
+                                <label>Photo</label>
                                 </div>
-                                <div class="inline disabled fields" id="byLoc" style="display: none;">
-                                <div class="field">
-                                    <label for="">URL</label>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                <input type="radio" name="byLocMedia" value="2">
+                                <label>Video</label>
                                 </div>
-                                <div class="six wide field">
-                                    <div class="ui input">
-                                    <input id="byLocUrl" name="byLoc_url" type="text" placeholder="224442573/salton-sea/">
-                                    </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                <input type="radio" name="byLocMedia" checked="checked" value="3">
+                                <label>Both</label>
                                 </div>
-                                <div class="field">
-                                    <label for="">Amount</label>
-                                </div>
-                                <div class="four wide field">
-                                    <div class="ui input">
-                                    <input id="byLocAmount" name="byLoc_amount" type="number" placeholder="50">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                    <input type="radio" name="byLocMedia" value="1">
-                                    <label>Photo</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                    <input type="radio" name="byLocMedia" value="2">
-                                    <label>Video</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                    <input type="radio" name="byLocMedia" checked="checked" value="3">
-                                    <label>Both</label>
-                                    </div>
-                                </div>
-                                </div>
+                            </div>
                             </div>
                         </div>
-                        <!--  LIKE INTERACTION -->
+                        <!-- LIKE UTILITY  -->
                         <div class="three fields">
                             <div class="field">
                                 <div class="ui message">
-                                    <div class="ui checkbox">
+                                    <div class="ui checkbox beta">
                                         <input id="fLiked_on" type="checkbox" name="example">
-                                        <label>Following Liked Image</label>
+                                        <label for="fLiked_on">Following Liked Image</label>
                                     </div>
                                     <div class="disabled field" id="fLiked">
                                         <div class="inline fields">
@@ -266,9 +259,9 @@
                             </div>
                             <div class="field">
                                 <div class="ui message">
-                                    <div class="ui checkbox">
+                                    <div class="ui checkbox beta">
                                         <input id="comments_on" type="checkbox" name="example">
-                                        <label>Commenting Liked Image</label>
+                                        <label for="comments_on">Commenting Liked Image</label>
                                     </div>
                                     <div class="disabled field" id="commenting">
                                         <div class="inline fields">
@@ -312,9 +305,9 @@
                             </div>
                             <div class="field">
                                 <div class="ui message">
-                                    <div class="ui checkbox">
+                                    <div class="ui checkbox beta">
                                         <input id="followCount_on" type="checkbox" name="fc_cb">
-                                        <label>Following parameter</label>
+                                        <label for="followCount_on">Following parameter</label>
                                     </div>
                                     <div class="disabled field" id="followCount">
                                         <div class="inline fields">
@@ -341,161 +334,153 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- FOLLOW UTILITY -->
-                    <div class="field" id="followUtil">
-                        <div class="field">
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                    <input id="fUsers_on" type="checkbox" name="fList_cb">
-                                    <label>Follow Users</label>
-                                </div>
-                                <div class="disabled field" id="fUsers" style="display: none;">
-                                    <div class="inline fields">
-                                        <div class="one wide field">
-                                            <label>Users</label>
-                                        </div>
-                                        <div class="fourteen wide field">
-                                            <div class="ui input">
-                                                <input id="fUsersLists" name="fList_user" type="text" placeholder="username1, username2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- FOLLOW LIST  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="fUsers_on" type="checkbox" name="fList_cb">
+                                <label for="fUsers_on">Follow Users</label>
                             </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                    <input id="fFollowers_on" type="checkbox" name="fFollowers_on">
-                                    <label>Follow User Followers</label>
-                                </div>
-                                <div class="disabled field" id="fFollowers" style="display: none;">
-                                    <div class="inline fields">
-                                        <div class="two wide field">
-                                            <label>Users</label>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui input">
-                                                <input id="fFollowersUsers" name="fFollowers_user" type="text" placeholder="username1, username2">
-                                            </div>
-                                        </div>
-                                        <div class="two wide field">
-                                            <label>Amount</label>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui input">
-                                                <input id="fFollowersAmount" name="fFollowers_amount" type="text" placeholder="50">
-                                            </div>
-                                        </div>
-                                        <div class="two wide field">
-                                            <label>Delay(s)</label>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui input">
-                                                <input id="fFollowersDelay" name="fFollowers_delay" type="text" placeholder="30">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui checkbox">
-                                                <input id="fFollowersRandom" type="checkbox" name="fFollowers_random">
-                                                <label>Random</label>
-                                            </div>
-                                        </div>
+                            <div class="disabled field" id="fUsers" style="display: none;">
+                                <div class="inline fields">
+                                    <div class="one wide field">
+                                        <label>Users</label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                    <input id="fFollowing_on" type="checkbox" name="fFollowings_cb">
-                                    <label>Follow User Followings</label>
-                                </div>
-                                <div class="disabled field" id="fFollowing" style="display: none;">
-                                    <div class="inline fields">
-                                        <div class="two wide field">
-                                            <label>Users</label>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui input">
-                                                <input id="fFollowingUsers" name="fFollowings_user" type="text" placeholder="username1, username2">
-                                            </div>
-                                        </div>
-                                        <div class="two wide field">
-                                            <label>Amount</label>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui input">
-                                                <input id="fFollowingAmount" name="fFollowings_amount" type="text" placeholder="50">
-                                            </div>
-                                        </div>
-                                        <div class="two wide field">
-                                            <label>Delay(s)</label>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui input">
-                                                <input id="fFollowingDelay" name="fFollowings_delay" type="text" placeholder="30">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui checkbox">
-                                                <input id="fFollowingRandom" type="checkbox" name="fFollowings_random">
-                                                <label>Random</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                    <input id="unfollowUsers_on" type="checkbox" name="unFollow_cb">
-                                    <label>Unfollow Users</label>
-                                </div>
-                                <div class="disabled field" id="unfollowUser" style="display: none;">
-                                    <div class="inline fields">
-                                        <div class="one wide field">
-                                            <label>Users</label>
-                                        </div>
-                                        <div class="fourteen wide field">
-                                            <div class="ui input">
-                                                <input id="unfollowAmount" name="unFollow_user" type="number" placeholder="30">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui message">
-                                <div class="ui checkbox">
-                                    <input id="interact_on" type="checkbox" name="example">
-                                    <label>Interact with Followed User</label>
-                                </div>
-                                <div class="inline disabled fields" id="interact" style="display: none;">
-                                    <div class="field">
-                                        <label for="">Amount</label>
-                                    </div>
-                                    <div class="four wide field">
+                                    <div class="fourteen wide field">
                                         <div class="ui input">
-                                            <input id="interactAmount" name="fi_amount" type="text" placeholder="friend1, friend2">
+                                            <input id="fUsersLists" name="fList_user" type="text" placeholder="username1, username2">
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FOLLOW FOLLOWER  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="fFollowers_on" type="checkbox" name="fFollowers_on">
+                                <label for="fFollowers_on">Follow User Followers</label>
+                            </div>
+                            <div class="disabled field" id="fFollowers" style="display: none;">
+                                <div class="inline fields">
+                                    <div class="two wide field">
+                                        <label>Users</label>
                                     </div>
                                     <div class="field">
-                                        <label for="">Percentage</label>
-                                    </div>
-                                    <div class="four wide field">
                                         <div class="ui input">
-                                            <input id="interactPercent" name="fi_percent" type="text" placeholder="friend1, friend2">
+                                            <input id="fFollowersUsers" name="fFollowers_user" type="text" placeholder="username1, username2">
+                                        </div>
+                                    </div>
+                                    <div class="two wide field">
+                                        <label>Amount</label>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui input">
+                                            <input id="fFollowersAmount" name="fFollowers_amount" type="text" placeholder="50">
+                                        </div>
+                                    </div>
+                                    <div class="two wide field">
+                                        <label>Delay(s)</label>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui input">
+                                            <input id="fFollowersDelay" name="fFollowers_delay" type="text" placeholder="30">
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui checkbox">
-                                            <input id="interactRandom" type="checkbox" name="fi_random">
-                                            <label>random</label>
+                                            <input id="fFollowersRandom" type="checkbox" name="fFollowers_random">
+                                            <label>Random</label>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FOLLOW FOLLOWING  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="fFollowing_on" type="checkbox" name="fFollowings_cb">
+                                <label for="fFollowing_on">Follow User Followings</label>
+                            </div>
+                            <div class="disabled field" id="fFollowing" style="display: none;">
+                                <div class="inline fields">
+                                    <div class="two wide field">
+                                        <label>Users</label>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui input">
+                                            <input id="fFollowingUsers" name="fFollowings_user" type="text" placeholder="username1, username2">
+                                        </div>
+                                    </div>
+                                    <div class="two wide field">
+                                        <label>Amount</label>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui input">
+                                            <input id="fFollowingAmount" name="fFollowings_amount" type="text" placeholder="50">
+                                        </div>
+                                    </div>
+                                    <div class="two wide field">
+                                        <label>Delay(s)</label>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui input">
+                                            <input id="fFollowingDelay" name="fFollowings_delay" type="text" placeholder="30">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui checkbox">
+                                            <input id="fFollowingRandom" type="checkbox" name="fFollowings_random">
+                                            <label>Random</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- UNFOLLOW  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="unfollowUsers_on" type="checkbox" name="unFollow_cb">
+                                <label for="unfollowUsers_on">Unfollow Users</label>
+                            </div>
+                            <div class="disabled field" id="unfollowUser" style="display: none;">
+                                <div class="inline fields">
+                                    <div class="one wide field">
+                                        <label>Users</label>
+                                    </div>
+                                    <div class="fourteen wide field">
+                                        <div class="ui input">
+                                            <input id="unfollowAmount" name="unFollow_user" type="number" placeholder="30">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FOLLOW UTIL  -->
+                        <div class="ui message">
+                            <div class="ui checkbox beta omega">
+                                <input id="interact_on" type="checkbox" name="example">
+                                <label for="interact_on">Interact with Followed User</label>
+                            </div>
+                            <div class="inline disabled fields" id="interact" style="display: none;">
+                                <div class="field">
+                                    <label for="">Amount</label>
+                                </div>
+                                <div class="four wide field">
+                                    <div class="ui input">
+                                        <input id="interactAmount" name="fi_amount" type="text" placeholder="friend1, friend2">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="">Percentage</label>
+                                </div>
+                                <div class="four wide field">
+                                    <div class="ui input">
+                                        <input id="interactPercent" name="fi_percent" type="text" placeholder="friend1, friend2">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input id="interactRandom" type="checkbox" name="fi_random">
+                                        <label>random</label>
                                     </div>
                                 </div>
                             </div>
@@ -526,7 +511,9 @@
     <script>
     // You can also require other files to run in this process
     require('./assets/js/app.js')
-    require('./assets/js/renderer.js')
+    require('./assets/js/view.js')
+    require('./assets/js/validation.js')
+    // require('./assets/js/renderer.js')
     $('.ui.sticky')
     .sticky({
         context: 'form'
@@ -543,39 +530,5 @@
         e.preventDefault();
     })
 
-    $('#myform').form({
-        on: 'blur',
-        inline: false,
-        fields: {
-            username: {
-                identifier: 'username',
-                rules: [
-                {
-                    type   : 'empty',
-                    prompt : 'Please enter your name'
-                }
-                ]
-            },
-            password: {
-                identifier: 'password',
-                rules: [
-                {
-                    type   : 'empty',
-                    prompt : 'Please enter your name'
-                }
-                ]
-            },
-            amount: {
-                identifier: 'byTagsAmount',
-                depends: 'byTags_on',
-                rules: [
-                {
-                    type   : 'empty',
-                    prompt : 'Please enter your name'
-                }
-                ]
-            }
-        }
-    })
   </script>
 </html>
