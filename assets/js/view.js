@@ -3,13 +3,12 @@ var alpha = document.getElementById('alpha');
 
 // Listen for checkbox click
 alpha.addEventListener('click', function(event) {
-    console.log(event.target)
-        if (event.target.type === 'checkbox') {
-            if (event.target.parentElement.classList.contains('beta')) {
-                handleSelection(event.target)
+    if (event.target.type === 'checkbox') {
+        if (event.target.parentElement.classList.contains('beta')) {
+            handleSelection(event.target)
 
-            } 
-        }
+        } 
+    }
 })
 
 function handleSelection(beta) {
