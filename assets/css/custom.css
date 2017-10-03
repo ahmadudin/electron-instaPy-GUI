@@ -1,6 +1,25 @@
 * {
   font-family: 'Open Sans', sans-serif;
 }
+.titlebar {
+  padding: 1rem 0 0 0!important;
+}
+.titlebar button {
+  padding: 3px!important;
+  background-color: white!important;
+  -webkit-app-region: no-drag;
+}
+.header {
+  padding-top: 0 !important;
+}
+.header input {
+  -webkit-app-region: no-drag;
+}
+.ui.checkbox {
+  margin: 0em 0em 0.28571429rem 0em;
+}
+
+/* Custom Label */
 label {
   font-size: 0.9em !important;
   color: #828282 !important;
@@ -10,24 +29,28 @@ label {
   font-size: 0.8em !important;
   cursor: pointer;
 }
-.selected label {
-  color: #ffffff !important;
-}
 .selected .ui.checkbox label {
   color: #ffffff !important;
 }
+.selected label {
+  color: #ffffff !important;
+}
+
+/* Custom message */
 .ui.message {
   box-shadow: none;
   background: rgba(170, 183, 187, 0.23);
 }
-.ui.checkbox {
-  margin: 0em 0em 0.28571429rem 0em;
-}
-
 .ui.message.selected {
     background-color: #2185d0;
 }
-  
+
+/* Custom segment */
+.ui.segment {
+    user-select: none;
+}
+
+/* Custom Scrollbar Styiling */
 ::-webkit-scrollbar {
   width: 8px; /* 1px wider than Lion. */
   /* This is more usable for users trying to click it. */
