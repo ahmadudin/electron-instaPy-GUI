@@ -1,5 +1,4 @@
 const electron = require('electron')
-require('electron-reload')(__dirname)
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -14,7 +13,8 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 930, height: 700})
+  mainWindow = new BrowserWindow({width:930, height:700, frame:false})
+
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
