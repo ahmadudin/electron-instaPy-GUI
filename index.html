@@ -65,40 +65,56 @@
                         </div>
                     </div>
                     <div id="alpha" class="field" style="margin-top: 120px;">
+                        <div id="file-exists" class="ui message" style="display: none">
+                            <i class="close icon"></i>
+                            <div class="header">
+                               All files are in place, good to go!
+                            </div>
+                        </div>
+                        <div id="file-not-exists" class="ui message" style="display: none">
+                            <div id="instapy-missing" class="header">
+                                instapy folder is missing!
+                            </div>
+                            <div id="driver-missing" class="header">
+                                chromedriver is missing!
+                            </div>
+                            <i class="close icon"></i>
+                            
+                        </div>
                         <!-- SETTINGS  -->
                         <div class="ui message" id="settings">
                             <div class="four fields">
                                 <div class="field">
-                                    <div class="ui checkbox beta">
+                                    <div class="ui checkbox delta">
                                         <input id="restrictTags_on" type="checkbox" name="example">
-                                        <label>Restrict tags</label>
+                                        <label for="restrictTags_on">Restrict tags</label>
                                     </div>
                                     <div class="ui disabled input">
                                         <input id="restrictTags" name="resetrictTag" type="text" placeholder="tag1, tag2, tag3">
                                     </div>
                                 </div>
                                 <div class="field"> 
-                                    <div class="ui checkbox beta">
+                                    <div class="ui checkbox delta">
                                         <input id="restrictUsers_on" type="checkbox" name="example">
-                                        <label>Restrict users</label>
+                                        <label for="restrictUsers_on">Restrict users</label>
                                     </div>   
                                     <div class="ui disabled input">
                                         <input id="restrictUsers" name="restrictUser" type="text" placeholder="username1, username2, username2">  
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="ui checkbox beta">
+                                    <div class="ui checkbox delta">
                                         <input id="ignoreRestrict_on" type="checkbox" name="example">
-                                        <label>Ignore restriction</label>
+                                        <label for="ignoreRestrict_on">Ignore restriction</label>
                                     </div>
                                     <div class="ui disabled input">
                                         <input id="ignoreRestrict" name="ignoreRestrict" type="text" placeholder="tag1, tag2, tag3">
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="ui checkbox beta">
+                                    <div class="ui checkbox delta">
                                         <input id="excludeFriends_on" type="checkbox" name="example">
-                                        <label>Exclude friends</label>
+                                        <label for="excludeFriends_on">Exclude friends</label>
                                     </div>
                                     <div class="ui disabled input">
                                         <input id="excludeFriends" name="excludeFriend" type="text" placeholder="friend1, friend2">
@@ -501,6 +517,7 @@
                 </form>
             </div>
             <!-- FOOTER -->
+            
             <div class="ui two column centered grid" style="margin-top: 30px; border-top: #e8e2e2 1px solid; padding-top:10px; background-color: white; width: 100%">
                 <div class="middle aligned row">
                     <button id="fireButton" form="myform" class="ui huge primary button">
@@ -509,9 +526,9 @@
                     </button>
                 </div>    
                 <div class="middle aligned row">
-                    <svg class="ui small image" style="color:hsl(0,0%,66%)">
+                    <!-- <svg class="ui small image" style="color:hsl(0,0%,66%)">
                         <use xlink:href="icons.svg#icon-love"></use>
-                    </svg>
+                    </svg> -->
                 </div>
             </div>
         </div>
@@ -524,4 +541,14 @@
     <script src="./assets/js/validation.js"></script>
     <script src="./assets/js/view.js"></script>
     <script src="./assets/js/app.js"></script>
+    <script>
+        $('.message .close')
+        .on('click', function() {
+            $(this)
+            .closest('.message')
+            .hide()
+            ;
+        })
+        ;
+    </script>
 </html>
