@@ -1,5 +1,6 @@
 const settings = require('electron-settings')
 var alpha = document.getElementById('alpha');
+var remote = require('electron').remote; 
 
 // Listen for checkbox click
 alpha.addEventListener('click', function(event) {
@@ -10,6 +11,19 @@ alpha.addEventListener('click', function(event) {
         } 
     }
 })
+
+
+document.getElementById("min-btn").addEventListener("click", function (e) {
+    console.log('btn clicked!')
+    var window = remote.getCurrentWindow();
+    window.minimize(); 
+});
+
+document.getElementById("exit-btn").addEventListener("click", function (e) {
+    console.log('btn clicked!')
+    var window = remote.getCurrentWindow();
+    window.close();
+}); 
 
 function handleSelection(beta) {
     if (beta.checked) {
