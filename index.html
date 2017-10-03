@@ -25,9 +25,19 @@
             <div id="conts" class="ui segment" style="padding:0 20px">
                 <form id="myform" class="ui mini form">
                     <!-- HEADER & LOGIN -->
-                    <div class="ui sticky fixed top" style="width: 100%;">    
+                    <div class="ui sticky fixed top" style="width: 100%;">
                         <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid; padding-top:10px; background-color: white">
-                            <div class="row">
+                            <div class="row titlebar" style="-webkit-app-region: drag">
+                                <div class="right floated one wide column">
+                                    <button id="min-btn" class="ui icon mini button">
+                                        <i class="minus normal icon"></i>
+                                    </button>
+                                    <button id="exit-btn" class="ui icon mini button" type='button'>
+                                        <i class="remove normal icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row header" style="-webkit-app-region: drag">
                                 <div class="four wide left floated middle aligned column">
                                     <img src="assets/img/logo-GUI.png" alt="" class="ui small image">
                                 </div>
@@ -54,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="alpha" class="field" style="margin-top: 100px;">
+                    <div id="alpha" class="field" style="margin-top: 120px;">
                         <!-- SETTINGS  -->
                         <div class="ui message" id="settings">
                             <div class="four fields">
@@ -493,7 +503,10 @@
             <!-- FOOTER -->
             <div class="ui two column centered grid" style="margin-top: 30px; border-top: #e8e2e2 1px solid; padding-top:10px; background-color: white; width: 100%">
                 <div class="middle aligned row">
-                    <button id="fireButton" form="myform" class="ui huge primary button">RUN</button>
+                    <button id="fireButton" form="myform" class="ui huge primary button">
+                        <i class="icon play"></i>
+                        RUN
+                    </button>
                 </div>    
                 <div class="middle aligned row">
                     <svg class="ui small image" style="color:hsl(0,0%,66%)">
@@ -508,27 +521,7 @@
     <script src="assets/js/sticky.js"></script>
     <script src="assets/js/checkbox.js"></script>
     <script src="assets/js/form.js"></script>
-    <script>
-    // You can also require other files to run in this process
-    require('./assets/js/app.js')
-    require('./assets/js/view.js')
-    require('./assets/js/validation.js')
-    // require('./assets/js/renderer.js')
-    $('.ui.sticky')
-    .sticky({
-        context: 'form'
-    })
-
-    $('.error.message')
-    .on('click', function() {
-        $('#myform').find('.ui.error.message ul').remove();
-        $('#myform').find('.prompt').remove();
-    })
-    
-
-    $("#myform").submit(function(e) {
-        e.preventDefault();
-    })
-
-  </script>
+    <script src="./assets/js/validation.js"></script>
+    <script src="./assets/js/view.js"></script>
+    <script src="./assets/js/app.js"></script>
 </html>
