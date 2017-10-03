@@ -1,11 +1,8 @@
 const fs = require('fs');
 const dedent = require('dedent-js');
-const Store = require('electron-store');
-const ipcRenderer = require('electron').ipcRenderer;
 
 
-
-var data = {
+var params = {
     check: {
         restrictTags_on: true,
         restrictUsers_on: '',
@@ -55,18 +52,11 @@ var data = {
     fFollowingAmount: '',
     fFollowingDelay: '',
     fFollowingRandom: '',
-    unfollowAmount: '',
+    unfollowUsers: '',
     interactRandom: '',
     interactAmount: '',
     interactPercent: ''
 };
-
-const store = new Store({
-    name: 'instaPy-user',
-    defaults: data
-})
-
-var params = {};
 
 var app = {
     params : [],
@@ -74,6 +64,7 @@ var app = {
     // Compiling python script
     compileScript: function() {
         var check = params.check;
+        var identity = app.identity()
         var restrictTag = app.restrictTags(check.restrictTags_on);
         var restrictUser = app.restrictUsers(check.restrictUsers_on);
         var excludeFriends = app.excludeFriends(check.excludeFriends_on);
@@ -93,12 +84,9 @@ var app = {
         // Python script template
         var content = dedent(`
             from instapy import InstaPy
-            \nsession = InstaPy(username='', password='')
+            ${identity}
             \nsession.login()
-            ${restrictTag}${restrictUser}${excludeFriends}${ignoreRestrict}
-            ${fLiked}${comments}${followCount}${interact}
-            ${byTags}${byImages}${byLocations}
-            ${fFollowers}${fFollowing}${fUsers}${unfollowUsers}
+            ${restrictTag}${restrictUser}${excludeFriends}${ignoreRestrict}${fLiked}${comments}${followCount}${interact}${byTags}${byImages}${byLocations}${fFollowers}${fFollowing}${fUsers}${unfollowUsers}
             \nsession.end()
         `);
         console.log(content);
@@ -116,67 +104,59 @@ var app = {
     parser: function(input) {
         var parsed = "'" + input.replace(/\s+/g, '').split(',').join("', '") + "'";
 
-        console.log(parsed);
         return parsed;
     },
     // Updating checkboxes value
     updateParams: function() {
         for (var i in params.check) {
             params.check[i] = $('#'+i).is(':checked');
-            console.log(params.check[i]);
         }
     },
-    validate: function() {
-
-    },
     /* --------- INPUT PROCESSING --------- */
+    identity: function() {
+        params.username = $('#username').val();
+        params.password = $('#password').val();
+        var content = `\nsession = InstaPy(username='${params.username}', password='${params.password}')`;
+        return content;
+    },
     restrictTags: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.restrictTags = this.parser($('#restrictTags').val());
             content = `\nsession.set_dont_like([${params.restrictTags}])`;
-        } else {
-            content = ``;
         }
 
-        // console.log(content);
         return content;
     },
     restrictUsers: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.restrictUsers = this.parser($('#restrictUsers').val());
             content = `\nsession.set_ignore_users([${params.restrictUsers}])`;
-        } else {
-            content = ``;
         }
-        // console.log(content)
+
         return content;
     },
     excludeFriends: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.excludeFriends = this.parser($('#excludeFriends').val());
             content = `\nsession.set_dont_include([${params.excludeFriends}])`;
-        } else {
-            content = ``;
-        }
-        // console.log(content)
+        } 
+
         return content;
     },
     ignoreRestrict: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.ignoreRestrict = this.parser($('#ignoreRestrict').val());
-            content = `\nsession.set_ignore_if_contains([${params.ignoreRestrict}])`;
-        } else {
-            content = ``;
+            content = `\nsession.set_ignore_if_contains([${params.ignoreRestrict}])\n`;
         }
-        // console.log(content)
+
         return content;
     },
     interact: function(on) {
@@ -190,7 +170,7 @@ var app = {
             } else {
                 params.interactRandom = 'False';
             }
-            content = `\nsession.set_user_interact(amount=${params.interactAmount}, random=${params.interactRandom}, percentage=${params.interactPercent})`;
+            content = `\nsession.set_user_interact(amount=${params.interactAmount}, random=${params.interactRandom}, percentage=${params.interactPercent})\n`;
         } 
 
         return content;
@@ -207,7 +187,7 @@ var app = {
         return content;
     },
     comments: function(on){
-        var content;
+        var content = ``;
 
         if (on) {
             params.comments = this.parser($('#comments').val());
@@ -221,21 +201,17 @@ var app = {
                 params.commentsMedia = "Null";
             }
             content = `\nsession.set_do_comment(enabled=True, percentage=${params.commentsPercent})\nsession.set_comments([${params.comments}], media=${params.commentsMedia})`;
-        } else {
-            content = ``;
         }
-        // console.log(content);
+
         return content;
     },
     followCount: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.upperCount = $('#upperCount').val();
             params.lowerCount = $('#lowerCount').val();
             content = `\nsession.set_upper_follower_count(limit = ${params.upperCount})\nsession.set_lower_follower_count(limit = ${params.lowerCount})`;
-        } else {
-            content = ``;
         }
 
         return content;
@@ -259,11 +235,11 @@ var app = {
             }
             content = `\nsession.follow_user_followers([${params.fFollowersUsers}], amount=${params.fFollowersAmount}, delay=${params.fFollowersDelay}, random=${params.fFollowersRandom}, interact=${interact})`;
         }
-        // console.log(content)
+
         return content;
     },
     fFollowing: function(on) {
-        var content;
+        var content = ``;
         var interact = 'False';
 
         if (on) {
@@ -280,36 +256,32 @@ var app = {
                 interact = 'True';
             }
             content = `\nsession.follow_user_following([${params.fFollowingUsers}], amount=${params.fFollowingAmount}, delay=${params.fFollowingDelay}, random=${params.fFollowingRandom}, interact=${interact})`;
-        } else {
-            content = ``;
         }
-        // console.log(content)
+
         return content;
     },
     fUsers: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
-            params.fUsers = this.parser($('#fUsers').val());
+            params.fUsers = this.parser($('#fUsersLists').val());
             content = `\nsession.follow_by_list([${params.fUsers}], times=1)`
-        } else {
-            content = ``;
         }
+
         return content;
     },
     unfollowUsers: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.unfollowAmount = $('#unfollowAmount').val();
             content = `\nsession.unfollow_users(amount=${params.unfollowAmount})`;
-        } else {
-            content = ``;
         }
+
         return content;
     },
     byTags: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.byTagsTags = this.parser($('#byTagsTags').val());
@@ -323,13 +295,12 @@ var app = {
                 params.byTagsMedia = "Null";
             }
             content = `\nsession.like_by_tags([${params.byTagsTags}], amount=${params.byTagsAmount}, media=${params.byTagsMedia})`;
-        } else {
-            content = ``;
         }
+
         return content;
     },
     byImages: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.byImgUrl = this.parser($('#byImgUrl').val());
@@ -343,13 +314,12 @@ var app = {
                 params.byImgMedia = "Null";
             }
             content = `\nsession.like_from_image([${params.byImgUrl}], amount=${params.byImgAmount}, media=${params.byImgMedia})`;
-        } else {
-            content = ``;
         }
+
         return content;
     },
     byLocations: function(on) {
-        var content;
+        var content = ``;
 
         if (on) {
             params.byLocUrl = this.parser($('#byLocUrl').val());
@@ -362,15 +332,12 @@ var app = {
             } else {
                 params.byLocMedia = "Null";
             }
-            content = `\nsession.like_by_locations([${params.byLocUrl}], amount=${params.byLocAmount}, media=${params.byLocMedia})`;
-        } else {
-            content = ``;
+            content = `\nsession.like_by_locations([${params.byLocUrl}], amount=${params.byLocAmount}, media=${params.byLocMedia})\n`;
         }
+
         return content;
     }
 };
-
-
 
 // Interface interaction handler
 var handler = {
@@ -378,38 +345,17 @@ var handler = {
         app.updateParams();
         app.createScript(app.compileScript());
         console.log('Write files succeed!');
-
-        // update content
-        // console.log('here it is');
     }
 };
 
 $(document).ready(function() {
-    // store.set(data);
-    params = store.get();
-
     $("#myform").submit(function(e) {
         e.preventDefault();
-        // if( $('#myform').form('is valid')) {
-        //     handler.submit();
-        // } else {
-        //     console.log('at least place a tag!');
-        // }
-        // console.log(data);
-        var test = false;
-        if (params.check.restrictUsers_on) {
-            test = true;
+        if( $('#myform').form('is valid') && oneCheck()) {
+            handler.submit();
+        } else {
+            console.log('at least place a tag!');
         }
-        console.log(params.check.restrictTags_on);
-        console.log(test);
-        ipcRenderer.send('asynchronous-message', params);
-        ipcRenderer.on('asynchronous-reply', function(event, arg) {
-        console.log(arg); // prints "pong"
-        });
-        
     });
-    
 });
-
-
 
