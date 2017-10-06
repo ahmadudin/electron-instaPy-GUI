@@ -30,9 +30,14 @@ document.getElementById("exit-btn").addEventListener("click", function (e) {
 
 // Initial view based on last usage
 var state = settings.getAll()
-for (var i in state) {
-    document.getElementById(i).click()
+if (state) {
+    for (var i in state) {
+        document.getElementById(i).click()
+    }
+} else {
+    document.getElementById('byTags_on').click()
 }
+
 
 function handleSettingSelection(delta) {
     var checkbox = document.getElementsByClassName('delta')
