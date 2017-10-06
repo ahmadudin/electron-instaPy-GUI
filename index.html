@@ -12,8 +12,12 @@
         <link rel="stylesheet" href="assets/css/grid.css">
         <link rel="stylesheet" href="assets/css/sticky.css">
         <link rel="stylesheet" href="assets/css/button.css">
+        <link rel="stylesheet" href="assets/css/modal.css">
+        <link rel="stylesheet" href="assets/css/transition.css">
+        <link rel="stylesheet" href="assets/css/dimmer.css">
         <link rel="stylesheet" href="assets/css/checkbox.min.css">
-        <link rel="stylesheet" href="assets/css/icon.css"> 
+        <link rel="stylesheet" href="assets/css/icon.css">
+        <link rel="stylesheet" href="assets/css/loader.css"> 
         <!-- //size:62 -->
         <link rel="stylesheet" href="assets/css/message.css">
         <!-- //border: -->
@@ -26,7 +30,7 @@
                 <form id="myform" class="ui mini form">
                     <!-- HEADER & LOGIN -->
                     <div class="ui sticky fixed top" style="width: 100%;">
-                        <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid; padding-top:10px; background-color: white">
+                        <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid;background-color: white; padding-top: 10px;-webkit-app-region: drag">
                             <div class="row titlebar" style="-webkit-app-region: drag">
                                 <div class="right floated one wide column">
                                     <button id="min-btn" class="ui icon mini button">
@@ -37,7 +41,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row header" style="-webkit-app-region: drag">
+                            <div class="row headers" style="-webkit-app-region: drag">
                                 <div class="four wide left floated middle aligned column">
                                     <img src="assets/img/logo-GUI.png" alt="" class="ui small image">
                                 </div>
@@ -67,7 +71,7 @@
                     <div id="alpha" class="field" style="margin-top: 120px;">
                         <div id="file-exists" class="ui message" style="display: none">
                             <i class="close icon"></i>
-                            <div class="header">
+                            <div class="headers">
                                All files are in place, good to go!
                             </div>
                         </div>
@@ -516,6 +520,7 @@
                     </div>
                 </form>
             </div>
+            
             <!-- FOOTER -->
             
             <div class="ui two column centered grid" style="margin-top: 30px; border-top: #e8e2e2 1px solid; padding-top:10px; background-color: white; width: 100%">
@@ -523,6 +528,14 @@
                     <button id="fireButton" form="myform" class="ui huge primary button">
                         <i class="icon play"></i>
                         RUN
+                    </button>
+                    <button id="test" class="ui huge primary button">
+                        <i class="icon play"></i>
+                        TEST
+                    </button>
+                    <button id="logButton" class="ui huge primary button">
+                        <i class="icon tree"></i>
+                        LOG
                     </button>
                 </div>    
                 <div class="middle aligned row">
@@ -532,14 +545,42 @@
                 </div>
             </div>
         </div>
+        <div class="ui small modal test">
+            <i class="close icon"></i>
+            <div class="header">
+                InstaPy logs
+            </div>
+            <div id="modal-content" class="scrolling content" style="height: 300px">
+                <div id="exec-log" class="description">
+                    
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui active inline tiny loader" style="display: none"></div>
+                <label id="proc-state" class="button">InstaPy is running ...</label>
+                
+                <div id="terminate" class="ui black button">
+                Stop
+                </div>
+                <div id="finish" class="ui positive right labeled icon button">
+                End Session
+                <i class="checkmark icon"></i>
+                </div>
+            </div>
+        </div>
+        <div style="-webkit-app-region: no-drag;"></div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="assets/js/sticky.js"></script>
+    <script src="assets/js/dimmer.js"></script>
+    <script src="assets/js/transition.js"></script>
     <script src="assets/js/checkbox.js"></script>
+    <script src="assets/js/modal.js"></script>
     <script src="assets/js/form.js"></script>
     <script src="./assets/js/validation.js"></script>
     <script src="./assets/js/view.js"></script>
+    <!-- <script src="assets/js/index.js"></script> -->
     <script src="./assets/js/app.js"></script>
     <script>
         $('.message .close')
