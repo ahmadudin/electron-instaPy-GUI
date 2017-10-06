@@ -1,18 +1,18 @@
 * {
   font-family: 'Open Sans', sans-serif;
 }
-.titlebar {
+ .titlebar {
   padding: 1rem 0 0 0!important;
-}
+} 
 .titlebar button {
   padding: 3px!important;
   background-color: white!important;
-  -webkit-app-region: no-drag;
+  -webkit-app-region: no-drag; 
 }
-.header {
+.headers {
   padding-top: 0 !important;
 }
-.header input {
+.headers input {
   -webkit-app-region: no-drag;
 }
 .ui.checkbox {
@@ -40,6 +40,12 @@ label {
 .ui.message {
   box-shadow: none;
   background: rgba(170, 183, 187, 0.23);
+}
+.ui.message#file-exists {
+  background: rgba(74, 234, 23, 0.33);
+}
+.ui.message#file-not-exists {
+  background: rgba(234, 23, 23, 0.22);
 }
 .ui.message.selected {
     background-color: #2185d0;
