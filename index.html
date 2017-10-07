@@ -5,50 +5,37 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/item.css">
-        <link rel="stylesheet" href="assets/css/form.css">
-        <link rel="stylesheet" href="assets/css/image.css">
-        <link rel="stylesheet" href="assets/css/input.css">
-        <link rel="stylesheet" href="assets/css/grid.css">
-        <link rel="stylesheet" href="assets/css/sticky.css">
-        <link rel="stylesheet" href="assets/css/button.css">
-        <link rel="stylesheet" href="assets/css/modal.css">
-        <link rel="stylesheet" href="assets/css/transition.css">
-        <link rel="stylesheet" href="assets/css/dimmer.css">
-        <link rel="stylesheet" href="assets/css/checkbox.min.css">
-        <link rel="stylesheet" href="assets/css/icon.css">
-        <link rel="stylesheet" href="assets/css/loader.css"> 
-        <!-- //size:62 -->
-        <link rel="stylesheet" href="assets/css/message.css">
-        <!-- //border: -->
+        <link rel="stylesheet" href="assets/css/semantic.min.css">
         <link rel="stylesheet" href="assets/css/custom.css">
         
     </head>
     <body>
-        <div class="ui container">
-            <div id="conts" class="ui segment" style="padding:0 20px">
-                <form id="myform" class="ui mini form">
-                    <!-- HEADER & LOGIN -->
-                    <div class="ui sticky fixed top" style="width: 100%;">
-                        <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid;background-color: white; padding-top: 10px;-webkit-app-region: drag">
-                            <div class="row titlebar" style="-webkit-app-region: drag">
-                                <div class="right floated one wide column">
-                                    <button id="min-btn" class="ui icon mini button">
-                                        <i class="minus normal icon"></i>
-                                    </button>
-                                    <button id="exit-btn" class="ui icon mini button" type='button'>
-                                        <i class="remove normal icon"></i>
-                                    </button>
-                                </div>
+        <div id="conts" class="ui segment" style="padding:0 20px; height: 620px; overflow: auto"> 
+            <!-- MAIN CONTENT -->
+            <form id="myform" class="ui small form">
+                <div class="ui sticky fixed top" style="width: 100%;">
+                    <!-- HEADER -->
+                    <div class="ui equal width grid" style=" border-bottom: #e8e2e2 1px solid;background-color: white; padding-top: 10px;-webkit-app-region: drag">
+                        <!-- TITLEBAR -->
+                        <div class="row titlebar" style="-webkit-app-region: drag">
+                            <div class="right floated column" style="text-align: right">
+                                <button id="min-btn" class="ui icon mini button" type="button">
+                                    <i class="minus normal icon"></i>
+                                </button>
+                                <button id="exit-btn" class="ui icon mini button" type="button">
+                                    <i class="remove normal icon"></i>
+                                </button>
                             </div>
-                            <div class="row headers" style="-webkit-app-region: drag">
-                                <div class="four wide left floated middle aligned column">
-                                    <img src="assets/img/logo-GUI.png" alt="" class="ui small image">
-                                </div>
-                                <div class="ten wide column">
-                                    <div class="field">
-                                        <div class="ui message" style="background: white">
-                                        <div class="two fields">
+                        </div>
+                        <!-- LOGO & LOGIN -->
+                        <div class="row headers" style="-webkit-app-region: drag">
+                            <div class="four wide left floated middle aligned column">
+                                <img src="assets/img/logo-GUI.png" alt="" class="ui small image">
+                            </div>
+                            <div class="ten wide column">
+                                <div class="field">
+                                    <div class="ui basic segment">
+                                        <div class="two fields"  style="margin:0px">
                                             <div class="field">
                                                 <div class="ui left labeled icon input">
                                                 <input id="username" name="username" form="myform" type="text" placeholder="Username">
@@ -62,493 +49,499 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="alpha" class="field" style="margin-top: 120px;">
+                    <!-- WARNING MESSAGES -->
+                    <div id="file-exists" class="ui message" style="display: none">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            All files are in place, good to go!
+                        </div>
+                    </div>
+                    <div id="file-not-exists" class="ui message" style="display: none">
+                        <div id="instapy-missing" class="header">
+                            instapy folder is missing!
+                        </div>
+                        <div id="driver-missing" class="header">
+                            chromedriver is missing!
+                        </div>
+                        <i class="close icon"></i>
+                        
+                    </div>
+                    <!-- SETTINGS  -->
+                    <div class="ui horizontal secondary segments">
+                        <div class="ui secondary segment">
+                            <div class="field">
+                                <div class="ui checkbox beta">
+                                    <input id="restrictTags_on" type="checkbox" name="example">
+                                    <label for="restrictTags_on">Restrict tags</label>
+                                </div>
+                                <div class="ui disabled mini input">
+                                    <input id="restrictTags" name="resetrictTag" type="text" placeholder="tag1, tag2, tag3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <div class="field"> 
+                                <div class="ui checkbox beta">
+                                    <input id="restrictUsers_on" type="checkbox" name="example">
+                                    <label for="restrictUsers_on">Restrict users</label>
+                                </div>   
+                                <div class="ui disabled mini input">
+                                    <input id="restrictUsers" name="restrictUser" type="text" placeholder="username1, username2, username2">  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <div class="field">
+                                <div class="ui checkbox beta">
+                                    <input id="ignoreRestrict_on" type="checkbox" name="example">
+                                    <label for="ignoreRestrict_on">Ignore restriction</label>
+                                </div>
+                                <div class="ui disabled mini input">
+                                    <input id="ignoreRestrict" name="ignoreRestrict" type="text" placeholder="tag1, tag2, tag3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <div class="field">
+                                <div class="ui checkbox beta">
+                                    <input id="excludeFriends_on" type="checkbox" name="example">
+                                    <label for="excludeFriends_on">Exclude friends</label>
+                                </div>
+                                <div class="ui disabled mini input">
+                                    <input id="excludeFriends" name="excludeFriend" type="text" placeholder="friend1, friend2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LIKE BY TAGS  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="byTags_on" type="checkbox" name="byTags_on">
+                            <label for="byTags_on">Like by Tags</label>
+                        </div>
+                        <div class="inline disabled fields" id="byTags" style="display: none;">
+                            <!-- <div class="field"> -->
+                                <label for="">Tags</label>
+                            <!-- </div> -->
+                            <div class="six wide field">
+                                <div class="ui mini input">
+                                    <input id="byTagsTags" name="byTags_tags" type="text" placeholder="tag1, tag2, tag3">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="">Amount</label>
+                            </div>
+                            <div class="four wide field">
+                                <div class="ui mini input">
+                                    <input id="byTagsAmount" name="byTags_amount" type="number" placeholder="50">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="byTagsMedia" value="1">
+                                    <label>Photo</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="byTagsMedia" value="2">
+                                    <label>Video</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="byTagsMedia" checked="checked" value="3">
+                                    <label>Both</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LIKE BY IMAGES  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="byImg_on" type="checkbox" name="byImages">
+                            <label for="byImg_on">Like by Images</label>
+                        </div>
+                        <div class="inline disabled fields" id="byImg" style="display: none;">
+                        <div class="field">
+                            <label for="">URL</label>
+                        </div>
+                        <div class="six wide field">
+                            <div class="ui mini input">
+                            <input id="byImgUrl" name="byImages_url" type="text" placeholder="www.instagram.com/image">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="">Amount</label>
+                        </div>
+                        <div class="four wide field">
+                            <div class="ui mini input">
+                            <input id="byImgAmount" name="byImages_amount" type="number" placeholder="50">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="byImgMedia" value="1">
+                            <label>Photo</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="byImgMedia" value="2">
+                            <label>Video</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="byImgMedia" checked="checked" value="3">
+                            <label>Both</label>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- LIKE BY LOCATIONS  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                        <input id="byLoc_on" type="checkbox" name="byLoc_cb">
+                        <label for="byLoc_on">Like by Location</label>
+                        </div>
+                        <div class="inline disabled fields" id="byLoc" style="display: none;">
+                        <div class="field">
+                            <label for="">URL</label>
+                        </div>
+                        <div class="six wide field">
+                            <div class="ui mini input">
+                            <input id="byLocUrl" name="byLoc_url" type="text" placeholder="224442573/salton-sea/">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="">Amount</label>
+                        </div>
+                        <div class="four wide field">
+                            <div class="ui mini input">
+                            <input id="byLocAmount" name="byLoc_amount" type="number" placeholder="50">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="byLocMedia" value="1">
+                            <label>Photo</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="byLocMedia" value="2">
+                            <label>Video</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="byLocMedia" checked="checked" value="3">
+                            <label>Both</label>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- LIKE UTILITY  -->
+                    <div class="ui horizontal segments">
+                        <div class="ui secondary segment">
+                            <div class="field">
+                                <div class="ui checkbox beta">
+                                    <input id="fLiked_on" type="checkbox" name="example">
+                                    <label for="fLiked_on">Following Liked Image</label>
+                                </div>
+                                <div class="disabled field" id="fLiked">
+                                    <div class="inline fields">
+                                        <div class="four wide field">
+                                            <label>Percent</label>
+                                        </div>
+                                        <div class="twelve wide field">
+                                            <div class="ui mini input">
+                                                <input id="fLikedPercent" name="fl_percent" type="number" placeholder="70">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline fields">
+                                        <div class="four wide field">
+                                            <label>Times</label>
+                                        </div>
+                                        <div class="twelve wide field">
+                                            <div class="ui mini input">
+                                            <input id="fLikedTimes" name="fl_times" type="number" placeholder="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <div class="field"> 
+                                <div class="ui checkbox beta">
+                                    <input id="comments_on" type="checkbox" name="example">
+                                    <label for="comments_on">Commenting Liked Image</label>
+                                </div>
+                                <div class="disabled field" id="commenting">
+                                    <div class="inline fields">
+                                        <div class="three wide field">
+                                            <label for="">Percents</label>
+                                        </div>
+                                        <div class="three wide field">
+                                            <div class="ui mini input">
+                                                <input id="commentsPercent" name="cl_percent" type="number" placeholder="70">
+                                            </div>
+                                        </div>
+                                        <div class="three wide field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="commentsMedia" value="1">
+                                                <label>Photo</label>
+                                            </div>
+                                        </div>
+                                        <div class="three wide field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="commentsMedia" value="2">
+                                                <label>Video</label>
+                                            </div>
+                                        </div>
+                                        <div class="three wide field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="commentsMedia" value="3">
+                                                <label>Both</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline fields">
+                                        <div class="three wide field">
+                                            <label for="">Comment</label>
+                                        </div>
+                                        <div class="ten wide field">
+                                            <div class="ui mini input">
+                                                <input id="comments" name="cl_comment" type="text" placeholder="nice post, great!, wow">
+                                            </div>
+                                        </div>
+                                        <div class="ui checkbox" id="">
+                                            <input id="commentsEmoji" type="checkbox" name="cl_emoji">
+                                            <label>Emoji</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <div class="field">
+                                <div class="ui checkbox beta">
+                                    <input id="followCount_on" type="checkbox" name="fc_cb">
+                                    <label for="followCount_on">Following parameter</label>
+                                </div>
+                                <div class="disabled field" id="followCount">
+                                    <div class="inline fields">
+                                        <div class="seven wide field">
+                                            <label for="">Upper count</label>
+                                        </div>
+                                        <div class="nine wide field">
+                                            <div class="ui mini input">
+                                                <input id="upperCount" name="fc_upper" type="number" placeholder="250">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline fields">
+                                        <div class="seven wide field">
+                                            <label for="">Lower count</label>
+                                        </div>
+                                        <div class="nine wide field">
+                                            <div class="ui mini input" id="">
+                                                <input id="lowerCount" name="fc_lower" type="number" placeholder="100">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="alpha" class="field" style="margin-top: 120px;">
-                        <div id="file-exists" class="ui message" style="display: none">
-                            <i class="close icon"></i>
-                            <div class="headers">
-                               All files are in place, good to go!
-                            </div>
+                    <!-- FOLLOW LIST  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="fUsers_on" type="checkbox" name="fList_cb">
+                            <label for="fUsers_on">Follow Users</label>
                         </div>
-                        <div id="file-not-exists" class="ui message" style="display: none">
-                            <div id="instapy-missing" class="header">
-                                instapy folder is missing!
-                            </div>
-                            <div id="driver-missing" class="header">
-                                chromedriver is missing!
-                            </div>
-                            <i class="close icon"></i>
-                            
-                        </div>
-                        <!-- SETTINGS  -->
-                        <div class="ui message" id="settings">
-                            <div class="four fields">
-                                <div class="field">
-                                    <div class="ui checkbox delta">
-                                        <input id="restrictTags_on" type="checkbox" name="example">
-                                        <label for="restrictTags_on">Restrict tags</label>
-                                    </div>
-                                    <div class="ui disabled input">
-                                        <input id="restrictTags" name="resetrictTag" type="text" placeholder="tag1, tag2, tag3">
+                        <div class="disabled field" id="fUsers" style="display: none;">
+                            <div class="inline fields">
+                                <div class="one wide field">
+                                    <label>Users</label>
+                                </div>
+                                <div class="fourteen wide field">
+                                    <div class="ui mini input">
+                                        <input id="fUsersLists" name="fList_user" type="text" placeholder="username1, username2">
                                     </div>
                                 </div>
-                                <div class="field"> 
-                                    <div class="ui checkbox delta">
-                                        <input id="restrictUsers_on" type="checkbox" name="example">
-                                        <label for="restrictUsers_on">Restrict users</label>
-                                    </div>   
-                                    <div class="ui disabled input">
-                                        <input id="restrictUsers" name="restrictUser" type="text" placeholder="username1, username2, username2">  
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui checkbox delta">
-                                        <input id="ignoreRestrict_on" type="checkbox" name="example">
-                                        <label for="ignoreRestrict_on">Ignore restriction</label>
-                                    </div>
-                                    <div class="ui disabled input">
-                                        <input id="ignoreRestrict" name="ignoreRestrict" type="text" placeholder="tag1, tag2, tag3">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui checkbox delta">
-                                        <input id="excludeFriends_on" type="checkbox" name="example">
-                                        <label for="excludeFriends_on">Exclude friends</label>
-                                    </div>
-                                    <div class="ui disabled input">
-                                        <input id="excludeFriends" name="excludeFriend" type="text" placeholder="friend1, friend2">
-                                    </div>
-                                </div> 
                             </div>
                         </div>
-                        <!-- LIKE BY TAGS  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="byTags_on" type="checkbox" name="byTags_on">
-                                <label for="byTags_on">Like by Tags</label>
-                            </div>
-                            <div class="inline disabled fields" id="byTags" style="display: none;">
-                                <div class="field">
-                                    <label for="">Tags</label>
+                    </div>
+                    <!-- FOLLOW FOLLOWER  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="fFollowers_on" type="checkbox" name="fFollowers_on">
+                            <label for="fFollowers_on">Follow User Followers</label>
+                        </div>
+                        <div class="disabled field" id="fFollowers" style="display: none;">
+                            <div class="inline fields">
+                                <div class="one wide field">
+                                    <label>Users</label>
                                 </div>
                                 <div class="six wide field">
-                                    <div class="ui input">
-                                        <input id="byTagsTags" name="byTags_tags" type="text" placeholder="tag1, tag2, tag3">
+                                    <div class="ui mini input">
+                                        <input id="fFollowersUsers" name="fFollowers_user" type="text" placeholder="username1, username2">
                                     </div>
+                                </div>
+                                <div class="one wide field">
+                                    <label>Amount</label>
                                 </div>
                                 <div class="field">
-                                    <label for="">Amount</label>
-                                </div>
-                                <div class="four wide field">
-                                    <div class="ui input">
-                                        <input id="byTagsAmount" name="byTags_amount" type="number" placeholder="50">
+                                    <div class="ui mini input">
+                                        <input id="fFollowersAmount" name="fFollowers_amount" type="text" placeholder="50">
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="byTagsMedia" value="1">
-                                        <label>Photo</label>
-                                    </div>
+                                <div class="one wide field">
+                                    <label>Delay(s)</label>
                                 </div>
                                 <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="byTagsMedia" value="2">
-                                        <label>Video</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="byTagsMedia" checked="checked" value="3">
-                                        <label>Both</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- LIKE BY IMAGES  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="byImg_on" type="checkbox" name="byImages">
-                                <label for="byImg_on">Like by Images</label>
-                            </div>
-                            <div class="inline disabled fields" id="byImg" style="display: none;">
-                            <div class="field">
-                                <label for="">URL</label>
-                            </div>
-                            <div class="six wide field">
-                                <div class="ui input">
-                                <input id="byImgUrl" name="byImages_url" type="text" placeholder="www.instagram.com/image">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="">Amount</label>
-                            </div>
-                            <div class="four wide field">
-                                <div class="ui input">
-                                <input id="byImgAmount" name="byImages_amount" type="number" placeholder="50">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                <input type="radio" name="byImgMedia" value="1">
-                                <label>Photo</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                <input type="radio" name="byImgMedia" value="2">
-                                <label>Video</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                <input type="radio" name="byImgMedia" checked="checked" value="3">
-                                <label>Both</label>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <!-- LIKE BY LOCATIONS  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                            <input id="byLoc_on" type="checkbox" name="byLoc_cb">
-                            <label for="byLoc_on">Like by Location</label>
-                            </div>
-                            <div class="inline disabled fields" id="byLoc" style="display: none;">
-                            <div class="field">
-                                <label for="">URL</label>
-                            </div>
-                            <div class="six wide field">
-                                <div class="ui input">
-                                <input id="byLocUrl" name="byLoc_url" type="text" placeholder="224442573/salton-sea/">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="">Amount</label>
-                            </div>
-                            <div class="four wide field">
-                                <div class="ui input">
-                                <input id="byLocAmount" name="byLoc_amount" type="number" placeholder="50">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                <input type="radio" name="byLocMedia" value="1">
-                                <label>Photo</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                <input type="radio" name="byLocMedia" value="2">
-                                <label>Video</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                <input type="radio" name="byLocMedia" checked="checked" value="3">
-                                <label>Both</label>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <!-- LIKE UTILITY  -->
-                        <div class="three fields">
-                            <div class="field">
-                                <div class="ui message">
-                                    <div class="ui checkbox beta">
-                                        <input id="fLiked_on" type="checkbox" name="example">
-                                        <label for="fLiked_on">Following Liked Image</label>
-                                    </div>
-                                    <div class="disabled field" id="fLiked">
-                                        <div class="inline fields">
-                                            <div class="three wide field">
-                                                <label>Percent</label>
-                                            </div>
-                                            <div class="twelve wide field">
-                                                <div class="ui input">
-                                                    <input id="fLikedPercent" name="fl_percent" type="number" placeholder="70">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="inline fields">
-                                            <div class="three wide field">
-                                                <label>Times</label>
-                                            </div>
-                                            <div class="twelve wide field">
-                                                <div class="ui input">
-                                                <input id="fLikedTimes" name="fl_times" type="number" placeholder="1">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui message">
-                                    <div class="ui checkbox beta">
-                                        <input id="comments_on" type="checkbox" name="example">
-                                        <label for="comments_on">Commenting Liked Image</label>
-                                    </div>
-                                    <div class="disabled field" id="commenting">
-                                        <div class="inline fields">
-                                            <div class="three wide field">
-                                                <label for="">Percents</label>
-                                            </div>
-                                            <div class="six wide field">
-                                                <div class="ui input">
-                                                    <input id="commentsPercent" name="cl_percent" type="number" placeholder="70">
-                                                </div>
-                                            </div>
-                                            <div class="three wide field">
-                                                <div class="ui radio checkbox">
-                                                    <input type="radio" name="commentsMedia">
-                                                    <label>Photo</label>
-                                                </div>
-                                            </div>
-                                            <div class="two wide field">
-                                                <div class="ui radio checkbox">
-                                                    <input type="radio" name="commentsMedia">
-                                                    <label>Video</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="inline fields">
-                                            <div class="three wide field">
-                                                <label for="">Comment</label>
-                                            </div>
-                                            <div class="eight wide field">
-                                                <div class="ui input">
-                                                    <input id="comments" name="cl_comment" type="text" placeholder="nice post, great!, wow">
-                                                </div>
-                                            </div>
-                                            <div class="ui checkbox" id="">
-                                                <input id="commentsEmoji" type="checkbox" name="cl_emoji">
-                                                <label>Emoji</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui message">
-                                    <div class="ui checkbox beta">
-                                        <input id="followCount_on" type="checkbox" name="fc_cb">
-                                        <label for="followCount_on">Following parameter</label>
-                                    </div>
-                                    <div class="disabled field" id="followCount">
-                                        <div class="inline fields">
-                                            <div class="seven wide field">
-                                                <label for="">Upper follower count</label>
-                                            </div>
-                                            <div class="nine wide field">
-                                                <div class="ui input">
-                                                    <input id="upperCount" name="fc_upper" type="number" placeholder="250">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="inline fields">
-                                            <div class="seven wide field">
-                                                <label for="">Lower follower count</label>
-                                            </div>
-                                            <div class="nine wide field">
-                                                <div class="ui input" id="">
-                                                    <input id="lowerCount" name="fc_lower" type="number" placeholder="100">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- FOLLOW LIST  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="fUsers_on" type="checkbox" name="fList_cb">
-                                <label for="fUsers_on">Follow Users</label>
-                            </div>
-                            <div class="disabled field" id="fUsers" style="display: none;">
-                                <div class="inline fields">
-                                    <div class="one wide field">
-                                        <label>Users</label>
-                                    </div>
-                                    <div class="fourteen wide field">
-                                        <div class="ui input">
-                                            <input id="fUsersLists" name="fList_user" type="text" placeholder="username1, username2">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- FOLLOW FOLLOWER  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="fFollowers_on" type="checkbox" name="fFollowers_on">
-                                <label for="fFollowers_on">Follow User Followers</label>
-                            </div>
-                            <div class="disabled field" id="fFollowers" style="display: none;">
-                                <div class="inline fields">
-                                    <div class="two wide field">
-                                        <label>Users</label>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui input">
-                                            <input id="fFollowersUsers" name="fFollowers_user" type="text" placeholder="username1, username2">
-                                        </div>
-                                    </div>
-                                    <div class="two wide field">
-                                        <label>Amount</label>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui input">
-                                            <input id="fFollowersAmount" name="fFollowers_amount" type="text" placeholder="50">
-                                        </div>
-                                    </div>
-                                    <div class="two wide field">
-                                        <label>Delay(s)</label>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui input">
-                                            <input id="fFollowersDelay" name="fFollowers_delay" type="text" placeholder="30">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui checkbox">
-                                            <input id="fFollowersRandom" type="checkbox" name="fFollowers_random">
-                                            <label>Random</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- FOLLOW FOLLOWING  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="fFollowing_on" type="checkbox" name="fFollowings_cb">
-                                <label for="fFollowing_on">Follow User Followings</label>
-                            </div>
-                            <div class="disabled field" id="fFollowing" style="display: none;">
-                                <div class="inline fields">
-                                    <div class="two wide field">
-                                        <label>Users</label>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui input">
-                                            <input id="fFollowingUsers" name="fFollowings_user" type="text" placeholder="username1, username2">
-                                        </div>
-                                    </div>
-                                    <div class="two wide field">
-                                        <label>Amount</label>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui input">
-                                            <input id="fFollowingAmount" name="fFollowings_amount" type="text" placeholder="50">
-                                        </div>
-                                    </div>
-                                    <div class="two wide field">
-                                        <label>Delay(s)</label>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui input">
-                                            <input id="fFollowingDelay" name="fFollowings_delay" type="text" placeholder="30">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui checkbox">
-                                            <input id="fFollowingRandom" type="checkbox" name="fFollowings_random">
-                                            <label>Random</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- UNFOLLOW  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="unfollowUsers_on" type="checkbox" name="unFollow_cb">
-                                <label for="unfollowUsers_on">Unfollow Users</label>
-                            </div>
-                            <div class="disabled field" id="unfollowUser" style="display: none;">
-                                <div class="inline fields">
-                                    <div class="one wide field">
-                                        <label>Users</label>
-                                    </div>
-                                    <div class="fourteen wide field">
-                                        <div class="ui input">
-                                            <input id="unfollowAmount" name="unFollow_user" type="number" placeholder="30">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- FOLLOW UTIL  -->
-                        <div class="ui message">
-                            <div class="ui checkbox beta omega">
-                                <input id="interact_on" type="checkbox" name="example">
-                                <label for="interact_on">Interact with Followed User</label>
-                            </div>
-                            <div class="inline disabled fields" id="interact" style="display: none;">
-                                <div class="field">
-                                    <label for="">Amount</label>
-                                </div>
-                                <div class="four wide field">
-                                    <div class="ui input">
-                                        <input id="interactAmount" name="fi_amount" type="text" placeholder="friend1, friend2">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="">Percentage</label>
-                                </div>
-                                <div class="four wide field">
-                                    <div class="ui input">
-                                        <input id="interactPercent" name="fi_percent" type="text" placeholder="friend1, friend2">
+                                    <div class="ui mini input">
+                                        <input id="fFollowersDelay" name="fFollowers_delay" type="text" placeholder="30">
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui checkbox">
-                                        <input id="interactRandom" type="checkbox" name="fi_random">
-                                        <label>random</label>
+                                        <input id="fFollowersRandom" type="checkbox" name="fFollowers_random">
+                                        <label>Random</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="error" class="ui error message">
+                    <!-- FOLLOW FOLLOWING  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="fFollowing_on" type="checkbox" name="fFollowings_cb">
+                            <label for="fFollowing_on">Follow User Followings</label>
+                        </div>
+                        <div class="disabled field" id="fFollowing" style="display: none;">
+                            <div class="inline fields">
+                                <div class="one wide field">
+                                    <label>Users</label>
+                                </div>
+                                <div class="six wide field">
+                                    <div class="ui mini input">
+                                        <input id="fFollowingUsers" name="fFollowings_user" type="text" placeholder="username1, username2">
+                                    </div>
+                                </div>
+                                <div class="one wide field">
+                                    <label>Amount</label>
+                                </div>
+                                <div class="field">
+                                    <div class="ui mini input">
+                                        <input id="fFollowingAmount" name="fFollowings_amount" type="text" placeholder="50">
+                                    </div>
+                                </div>
+                                <div class="one wide field">
+                                    <label>Delay(s)</label>
+                                </div>
+                                <div class="field">
+                                    <div class="ui mini input">
+                                        <input id="fFollowingDelay" name="fFollowings_delay" type="text" placeholder="30">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input id="fFollowingRandom" type="checkbox" name="fFollowings_random">
+                                        <label>Random</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-            
-            <!-- FOOTER -->
-            
-            <div class="ui two column centered grid" style="margin-top: 30px; border-top: #e8e2e2 1px solid; padding-top:10px; background-color: white; width: 100%">
-                <div class="middle aligned row">
-                    <button id="fireButton" form="myform" class="ui huge primary button">
-                        <i class="icon play"></i>
-                        RUN
-                    </button>
-                    <button id="test" class="ui huge primary button">
-                        <i class="icon play"></i>
-                        TEST
-                    </button>
-                    <button id="logButton" class="ui huge primary button">
-                        <i class="icon tree"></i>
-                        LOG
-                    </button>
-                </div>    
-                <div class="middle aligned row">
-                    <!-- <svg class="ui small image" style="color:hsl(0,0%,66%)">
-                        <use xlink:href="icons.svg#icon-love"></use>
-                    </svg> -->
+                    <!-- UNFOLLOW  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="unfollowUsers_on" type="checkbox" name="unFollow_cb">
+                            <label for="unfollowUsers_on">Unfollow Users</label>
+                        </div>
+                        <div class="disabled field" id="unfollowUser" style="display: none;">
+                            <div class="inline fields">
+                                <div class="one wide field">
+                                    <label>Users</label>
+                                </div>
+                                <div class="fourteen wide field">
+                                    <div class="ui mini input">
+                                        <input id="unfollowAmount" name="unFollow_user" type="number" placeholder="30">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FOLLOW UTIL  -->
+                    <div class="ui secondary segment">
+                        <div class="ui checkbox beta omega">
+                            <input id="interact_on" type="checkbox" name="example">
+                            <label for="interact_on">Interact with Followed User</label>
+                        </div>
+                        <div class="inline disabled fields" id="interact" style="display: none;">
+                            <div class="field">
+                                <label for="">Amount</label>
+                            </div>
+                            <div class="four wide field">
+                                <div class="ui mini input">
+                                    <input id="interactAmount" name="fi_amount" type="text" placeholder="friend1, friend2">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="">Percentage</label>
+                            </div>
+                            <div class="four wide field">
+                                <div class="ui mini input">
+                                    <input id="interactPercent" name="fi_percent" type="text" placeholder="friend1, friend2">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui checkbox">
+                                    <input id="interactRandom" type="checkbox" name="fi_random">
+                                    <label>random</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div id="error" class="ui error message">
+                </div>
+            </form>
+        </div> 
+        <!-- FOOTER -->
+        <div class="ui two column centered grid" style="border-top: #e8e2e2 1px solid;background-color: white; width: 100%">
+            <div class="middle aligned row">
+                <button id="fireButton" form="myform" class="ui big primary button">
+                    <i class="icon play"></i>
+                    RUN
+                </button>
+                <button id="test" class="ui big positive button">
+                    <i class="icon play"></i>
+                    TEST
+                </button>
+                <button id="logButton" class="ui big secondary button">
+                    <i class="icon tree"></i>
+                    LOG
+                </button>
+            </div>  
         </div>
+        <!-- MODAL -->
         <div class="ui small modal test">
             <i class="close icon"></i>
             <div class="header">
-                InstaPy logs
+                InstaPy Process
             </div>
             <div id="modal-content" class="scrolling content" style="height: 300px">
                 <div id="exec-log" class="description">
