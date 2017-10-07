@@ -1,5 +1,5 @@
-function oneCheck() {
-	var nav = document.getElementsByClassName('omega');
+function selectionCheck() {
+    var nav = document.getElementsByClassName('omega');
 	for (var i = 0, l=nav.length;i<l;i++){
 		if(nav[i].firstElementChild.checked) {
             return true;
