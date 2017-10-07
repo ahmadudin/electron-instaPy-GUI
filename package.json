@@ -18,6 +18,12 @@
   "dependencies": {
     "dedent-js": "^1.0.1",
     "electron-reload": "^1.2.1",
-    "fs-jetpack": "^1.2.0"
+    "electron-settings": "^3.1.2",
+    "electron-store": "^1.3.0",
+    "file-exists": "^5.0.0",
+    "fs-jetpack": "^1.2.0",
+    "jquery": "^3.2.1",
+    "python-shell": "^0.4.0",
+    "terminate": "^2.1.0"
   }
 }
