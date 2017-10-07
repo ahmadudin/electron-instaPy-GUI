@@ -60,10 +60,10 @@ function handleSelection(beta) {
 }
 
 function fileCheck() {
-    fileExists('./indexs.html').then(exists => {
+    fileExists('./asset/chromedriver').then(exists => {
         if (exists) {
             $('#driver-missing').hide()
-            fileExists('./indexx.html').then(exists => {
+            fileExists('./instapy/instapy.py').then(exists => {
                 if (exists) {
                     $('#instapy-missing').hide()
                     $('#file-exists').show()
@@ -79,7 +79,7 @@ function fileCheck() {
             $('#driver-missing').show()
             $('#file-exists').hide()
             $('#file-not-exists').show()
-            fileExists('./indexx.html').then(exists => {
+            fileExists('./instapy/instapy.py').then(exists => {
                 if (exists) {
                     $('#instapy-missing').hide()
                     console.log('file b is ', exists)
