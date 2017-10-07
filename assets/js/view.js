@@ -8,9 +8,6 @@ alpha.addEventListener('click', function(event) {
     if (event.target.type === 'checkbox') {
         if (event.target.parentElement.classList.contains('beta')) {
             handleSelection(event.target)
-
-        } else if (event.target.parentElement.classList.contains('delta')) {
-            handleSettingSelection(event.target)
         }
     }
 })
@@ -38,41 +35,19 @@ if (state) {
     document.getElementById('byTags_on').click()
 }
 
-
-function handleSettingSelection(delta) {
-    var checkbox = document.getElementsByClassName('delta')
-    var checked = 0
-
-    for (var i = 0; i < checkbox.length ; i++) {
-        if (checkbox[i].firstElementChild.checked) {
-            checked++
-        }
-    }
-
-    // Remove selected class when none checked
-    if (checked > 0) {
-        delta.closest('.ui.message').classList.add('selected')
-    } else {
-        delta.closest('.ui.message').classList.remove('selected')
-    }
-
-    // Saving checkbox last state
-    if (delta.checked) {
-        settings.set(delta.id, delta.id)
-    } else {
-        settings.delete(delta.id)
-    }
-}
-
 function handleSelection(beta) {
     if (beta.checked) {
         // Change section background when selected
-        beta.closest('.ui.message').classList.add('selected')
+        var segment = beta.closest('.ui.segment').classList
+        segment.remove('secondary')
+        segment.add('blue', 'inverted')
         // Save cuerrent state
         settings.set(beta.id, beta.id)
     } else {
         // Change background back to default when unselected
-        beta.closest('.ui.message').classList.remove('selected')
+        var segment = beta.closest('.ui.segment').classList
+        segment.add('secondary')
+        segment.remove('blue', 'inverted')
         // save current state
         settings.delete(beta.id)
     }
