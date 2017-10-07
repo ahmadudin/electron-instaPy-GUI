@@ -1,10 +1,10 @@
 const fs = require('fs');
 const dedent = require('dedent-js');
-const shell = require('python-shell');
+const PythonShell = require('python-shell');
 var terminate = require('terminate');
 var interval;
-var pyshell
-var running = false
+var pyshell;
+var running = false;
 
 var params = {
     check: {
@@ -63,7 +63,6 @@ var params = {
 }
 
 var app = {
-    params : [],
     /* -------- APP METHOD -------- */
     // Compiling python script
     compileScript: function() {
@@ -98,7 +97,7 @@ var app = {
     },
     // Write and save Script to local storage
     createScript: function(content) {
-        fs.writeFile('py/quickstart.py', content, (err) => {
+        fs.writeFile('quickstart.py', content, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
         });
@@ -116,6 +115,7 @@ var app = {
             params.check[i] = $('#'+i).is(':checked');
         }
     },
+
     /* --------- INPUT PROCESSING --------- */
     identity: function() {
         params.username = $('#username').val();
@@ -202,7 +202,7 @@ var app = {
             } else if ($('#commentsMedia').val() === 2) {
                 params.commentsMedia = "'Video'";
             } else {
-                params.commentsMedia = "Null";
+                params.commentsMedia = "None";
             }
             content = `\nsession.set_do_comment(enabled=True, percentage=${params.commentsPercent})\nsession.set_comments([${params.comments}], media=${params.commentsMedia})`;
         }
@@ -296,7 +296,7 @@ var app = {
             } else if ($('input[name=byTagsMedia]:checked').val() === '2') {
                 params.byTagsMedia = "'Video'";
             } else {
-                params.byTagsMedia = "Null";
+                params.byTagsMedia = "None";
             }
             content = `\nsession.like_by_tags([${params.byTagsTags}], amount=${params.byTagsAmount}, media=${params.byTagsMedia})`;
         }
@@ -315,7 +315,7 @@ var app = {
             } else if ($('input[name=byImgMedia]:checked').val() === '2') {
                 params.byImgMedia = "'Video'";
             } else {
-                params.byImgMedia = "Null";
+                params.byImgMedia = "None";
             }
             content = `\nsession.like_from_image([${params.byImgUrl}], amount=${params.byImgAmount}, media=${params.byImgMedia})`;
         }
@@ -334,12 +334,39 @@ var app = {
             } else if ($('input[name=byLocMedia]:checked').val() === '2') {
                 params.byLocMedia = "'Video'";
             } else {
-                params.byLocMedia = "Null";
+                params.byLocMedia = "None";
             }
             content = `\nsession.like_by_locations([${params.byLocUrl}], amount=${params.byLocAmount}, media=${params.byLocMedia})\n`;
         }
 
         return content;
+    }
+}
+
+var shell = {
+    killProcess: function(pid) {
+        terminate(pid, function (err) {
+            if (err) throw err;
+        });
+    },
+    writeLog: function( content, color = false) {
+        var text = document.createTextNode(content)
+        var p = document.createElement('p')
+        if (color) {
+            p.style.color = color
+        }
+
+        p.appendChild(text)
+        document.getElementById('exec-log').appendChild(p)
+        $('#modal-content').stop().animate({
+            scrollTop: $('#modal-content')[0].scrollHeight
+        }, 800);
+    },
+    clearLog: function() {
+        var log = document.getElementById("exec-log");
+        while (log.firstChild) {
+            log.removeChild(log.firstChild);
+        }
     }
 }
 
@@ -355,114 +382,77 @@ var handler = {
 $(document).ready(function() {
     $("#myform").submit(function(e) {
         e.preventDefault();
-        if( $('#myform').form('is valid') && oneCheck()) {
+        if( $('#myform').form('is valid') && selectionCheck()) {
             handler.submit();
-           
+            $('.test').modal('show')
+            $('.actions > .button').show()
+            if (!running) {
+                $("#fireButton").addClass('loading')
+                $('.actions > .loader').show()
+                $('#terminate')
+                $('#finish').addClass('disabled')
+                $('#logButton').addClass('disabled')
+                $('.actions > label')[0].innerText = 'InstaPy running...'
+                $("#terminate").removeClass('disabled').off('click').on('click', function(e) {
+                    console.log('terminate pid: ', pyshell.childProcess.pid)
+                    shell.killProcess(pyshell.childProcess.pid)
+                })
+
+                // Clear modal content
+                shell.clearLog();
+
+                // Initiate script executing process
+                pyshell = new PythonShell('quickstart.py',{scriptPath:"./", pythonOptions: ['-u']});
+                running = !pyshell.terminated
+                console.log('new pid: ', pyshell.childProcess.pid)
+
+                // Listen to message event and display it to  modal
+                pyshell.on('message', function (message) {
+                    if (message) {
+                        shell.writeLog(message)
+                    }
+                });
+
+                // Listen to process close event, then change modal action content
+                pyshell.on('close', function() {
+                    $('#terminate').addClass('disabled')
+                    $('#logButton').removeClass('disabled')
+                    $('#finish').removeClass('disabled').on('click', function() {
+                        running = !pyshell.terminated
+                        $("#fireButton").removeClass('loading')
+                    })
+                    $('.actions > .loader').hide()
+                    $('.actions > label')[0].innerText = 'InstaPy ended'
+                })
+
+                // Listen to process exit event and terminate the process (since it won't terminate itself)
+                pyshell.childProcess.on('exit', (err) => {
+                    shell.killProcess(pyshell.childProcess.pid)
+                });
+
+                // end the input stream and allow the process to exit 
+                pyshell.end(function (err) {
+                    if (err) {
+                        shell.writeLog(err, 'red')
+                    }
+                });
+            }
         } else {
             console.log('at least place a tag!');
         }
-        
     })
     $('#logButton').click(function() {
         $('.test').modal('show')
-        var log = document.getElementById("exec-log");
-        while (log.firstChild) {
-            log.removeChild(log.firstChild);
-        }
-
         $('.actions > .button').hide()
+        $('#logButton').addClass('loading')
+        shell.clearLog()
 
         var array = fs.readFileSync('logs/logFile.txt').toString().split('\n');
 
         array.forEach(function(e) {
-            var text = document.createTextNode(e)
-            var p = document.createElement('p')
-
-            p.appendChild(text)
-            document.getElementById('exec-log').appendChild(p)
-            $('#modal-content').stop().animate({
-                scrollTop: $('#modal-content')[0].scrollHeight
-            }, 800);
+            shell.writeLog(e);
         })
+        $('#logButton').removeClass('loading')
     })
-
-    function killProcess(pid) {
-        terminate(pid, function (err) {
-                    if (err) throw err;
-                });
-    }
-    
-    function writeLog(content, color = false) {
-        var text = document.createTextNode(content)
-        var p = document.createElement('p')
-        if (color) {
-            p.style.color = color
-        }
-
-        p.appendChild(text)
-        document.getElementById('exec-log').appendChild(p)
-        $('#modal-content').stop().animate({
-            scrollTop: $('#modal-content')[0].scrollHeight
-        }, 800);
-    }
-
-    $("#test").click(function(e) {
-        e.preventDefault();
-        $('.test').modal('show')
-        $('.actions > .button').show()
-        if (!running) {
-            $("#test").addClass('loading')
-            $('.actions > .loader').show()
-            $('#terminate').removeClass('disabled')
-            $('#finish').addClass('disabled')
-            $('.actions > label')[0].innerText = 'InstaPy running...'
-            $("#terminate").off('click').on('click', function(e) {
-                console.log('terminate pid: ', pyshell.childProcess.pid)
-                killProcess(pyshell.childProcess.pid)
-            })
-
-            // Clear modal content
-            var log = document.getElementById("exec-log");
-            while (log.firstChild) {
-                log.removeChild(log.firstChild);
-            }
-
-            // Initiate script executing process
-            pyshell = new shell('quickstart.py',{scriptPath:"./", pythonOptions: ['-u']});
-            running = !pyshell.terminated
-            console.log('new pid: ', pyshell.childProcess.pid)
-
-            // Listen to message event and display it to  modal
-            pyshell.on('message', function (message) {
-                if (message) {
-                    writeLog(message)
-                }
-            });
-
-            // Listen to process close event, then change modal action content
-            pyshell.on('close', function() {
-                $('#terminate').addClass('disabled')
-                $('#finish').removeClass('disabled').on('click', function() {
-                    running = !pyshell.terminated
-                    $("#test").removeClass('loading')
-                })
-                $('.actions > .loader').hide()
-                $('.actions > label')[0].innerText = 'InstaPy ended'
-            })
-
-            // Listen to process exit event and terminate the process (since it won't terminate itself)
-            pyshell.childProcess.on('exit', (err) => {
-                killProcess(pyshell.childProcess.pid)
-            });
-
-            // end the input stream and allow the process to exit 
-            pyshell.end(function (err) {
-                if (err) {
-                    writeLog(err, 'red')
-                }
-            });
-        }
-    })
-    
     interval = setInterval(fileCheck(),4000)
 });
