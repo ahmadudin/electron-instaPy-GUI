@@ -22,33 +22,18 @@
 /* Custom Label */
 label {
   font-size: 0.9em !important;
-  color: #828282 !important;
   user-select: none;
 }
 .ui.checkbox label {
-  font-size: 0.8em !important;
   cursor: pointer;
-}
-.selected .ui.checkbox label {
-  color: #ffffff !important;
-}
-.selected label {
-  color: #ffffff !important;
 }
 
 /* Custom message */
-.ui.message {
-  box-shadow: none;
-  background: rgba(170, 183, 187, 0.23);
-}
 .ui.message#file-exists {
   background: rgba(74, 234, 23, 0.33);
 }
 .ui.message#file-not-exists {
   background: rgba(234, 23, 23, 0.22);
-}
-.ui.message.selected {
-    background-color: #2185d0;
 }
 
 /* Custom segment */
