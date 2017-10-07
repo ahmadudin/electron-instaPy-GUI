@@ -411,6 +411,7 @@ $(document).ready(function() {
         $('.test').modal('show')
         $('.actions > .button').show()
         if (!running) {
+            $("#test").addClass('loading')
             $('.actions > .loader').show()
             $('#terminate').removeClass('disabled')
             $('#finish').addClass('disabled')
@@ -443,6 +444,7 @@ $(document).ready(function() {
                 $('#terminate').addClass('disabled')
                 $('#finish').removeClass('disabled').on('click', function() {
                     running = !pyshell.terminated
+                    $("#test").removeClass('loading')
                 })
                 $('.actions > .loader').hide()
                 $('.actions > label')[0].innerText = 'InstaPy ended'
