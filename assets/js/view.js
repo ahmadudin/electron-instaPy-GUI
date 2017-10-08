@@ -1,7 +1,9 @@
 const settings = require('electron-settings')
-const alpha = document.getElementById('alpha');
 const fileExists = require('file-exists');
-var remote = require('electron').remote; 
+const remote = require('electron').remote;
+
+const alpha = document.getElementById('alpha');
+var elementState = 'elementState.';
 
 // Listen for checkbox click
 alpha.addEventListener('click', function(event) {
@@ -14,19 +16,17 @@ alpha.addEventListener('click', function(event) {
 
 // Titlebar button event handler
 document.getElementById("min-btn").addEventListener("click", function (e) {
-    console.log('btn clicked!')
     var window = remote.getCurrentWindow();
     window.minimize(); 
 });
 
 document.getElementById("exit-btn").addEventListener("click", function (e) {
-    console.log('btn clicked!')
     var window = remote.getCurrentWindow();
     window.close();
 }); 
 
 // Initial view based on last usage
-var state = settings.getAll()
+var state = settings.get(elementState)
 if (state) {
     for (var i in state) {
         document.getElementById(i).click()
@@ -42,14 +42,14 @@ function handleSelection(beta) {
         segment.remove('secondary')
         segment.add('blue', 'inverted')
         // Save cuerrent state
-        settings.set(beta.id, beta.id)
+        settings.set(elementState.concat(beta.id), beta.id)
     } else {
         // Change background back to default when unselected
         var segment = beta.closest('.ui.segment').classList
         segment.add('secondary')
         segment.remove('blue', 'inverted')
         // save current state
-        settings.delete(beta.id)
+        settings.delete(elementState.concat(beta.id))
     }
     // Hide input field if hideable
     if (beta.parentElement.classList.contains('omega')) {
@@ -59,11 +59,15 @@ function handleSelection(beta) {
     $(beta).parent().next().toggleClass('disabled')
 }
 
-function fileCheck() {
-    fileExists('./asset/chromedriver').then(exists => {
+function displayPath(path) {
+    $('#displayPath').val(path)
+}
+
+function fileCheck(path) {
+    fileExists(path.concat('/assets/chromedriver')).then(exists => {
         if (exists) {
             $('#driver-missing').hide()
-            fileExists('./instapy/instapy.py').then(exists => {
+            fileExists(path.concat('/instapy/instapy.py')).then(exists => {
                 if (exists) {
                     $('#instapy-missing').hide()
                     $('#file-exists').show()
@@ -79,10 +83,9 @@ function fileCheck() {
             $('#driver-missing').show()
             $('#file-exists').hide()
             $('#file-not-exists').show()
-            fileExists('./instapy/instapy.py').then(exists => {
+            fileExists(path.concat('/instapy/instapy.py')).then(exists => {
                 if (exists) {
                     $('#instapy-missing').hide()
-                    console.log('file b is ', exists)
                 } else {
                     $('#instapy-missing').show()
                 }
