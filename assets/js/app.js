@@ -1,10 +1,21 @@
 const fs = require('fs');
 const dedent = require('dedent-js');
 const PythonShell = require('python-shell');
-var terminate = require('terminate');
+const terminate = require('terminate');
+const dialog = require('electron').remote.require('electron').dialog;
+
+
+var instapyPath = '';
 var interval;
 var pyshell;
 var running = false;
+
+// Initial path based on last usage
+var checkPath = settings.get('instapyPath');
+if (checkPath) {
+    instapyPath = checkPath;
+    displayPath(checkPath);
+}
 
 var params = {
     check: {
@@ -92,16 +103,13 @@ var app = {
             ${restrictTag}${restrictUser}${excludeFriends}${ignoreRestrict}${fLiked}${comments}${followCount}${interact}${byTags}${byImages}${byLocations}${fFollowers}${fFollowing}${fUsers}${unfollowUsers}
             \nsession.end()
         `);
-        console.log(content);
         return content;
     },
     // Write and save Script to local storage
     createScript: function(content) {
-        fs.writeFile('quickstart.py', content, (err) => {
+        fs.writeFile(instapyPath.concat('/quickstart.py'), content, (err) => {
             if (err) throw err;
-            console.log('The file has been saved!');
         });
-        // console.log(content);
     },
     // format input string to match python script syntax
     parser: function(input) {
@@ -115,7 +123,16 @@ var app = {
             params.check[i] = $('#'+i).is(':checked');
         }
     },
-
+    updatePath: function() {
+        path = dialog.showOpenDialog({
+            properties: ['openDirectory']
+        });
+        displayPath(path);
+        settings.set('instapyPath', path[0]);
+        clearInterval(interval);
+        interval = setInterval(fileCheck(path[0]), 4000);
+        instapyPath = path[0];
+    }, 
     /* --------- INPUT PROCESSING --------- */
     identity: function() {
         params.username = $('#username').val();
@@ -344,6 +361,41 @@ var app = {
 }
 
 var shell = {
+    initProcess: function() {
+        pyshell = new PythonShell('quickstart.py',{pythonOptions: ['-u'], cwd: instapyPath});
+        running = !pyshell.terminated
+
+        // Listen to message event and display it to  modal
+        pyshell.on('message', function (message) {
+            if (message) {
+                shell.writeLog(message)
+            }
+        });
+
+        // Listen to process close event, then change modal action content
+        pyshell.on('close', function() {
+            $('#terminate').addClass('disabled')
+            $('#logButton').removeClass('disabled')
+            $('#finish').removeClass('disabled').on('click', function() {
+                running = !pyshell.terminated
+                $("#fireButton").removeClass('loading')
+            })
+            $('.actions > .loader').hide()
+            $('.actions > label')[0].innerText = 'InstaPy ended'
+        })
+
+        // Listen to process exit event and terminate the process (since it won't terminate itself)
+        pyshell.childProcess.on('exit', (err) => {
+            shell.killProcess(pyshell.childProcess.pid)
+        });
+
+        // end the input stream and allow the process to exit 
+        pyshell.end(function (err) {
+            if (err) {
+                shell.writeLog(err, 'red')
+            }
+        });
+    },
     killProcess: function(pid) {
         terminate(pid, function (err) {
             if (err) throw err;
@@ -367,6 +419,13 @@ var shell = {
         while (log.firstChild) {
             log.removeChild(log.firstChild);
         }
+    },
+    openLog: function() {
+        var array = fs.readFileSync(instapyPath.concat('/logs/logFile.txt')).toString().split('\n');
+
+        array.forEach(function(e) {
+            shell.writeLog(e);
+        })
     }
 }
 
@@ -375,11 +434,13 @@ var handler = {
     submit: function() {
         app.updateParams();
         app.createScript(app.compileScript());
-        console.log('Write files succeed!');
     }
 };
 
 $(document).ready(function() {
+    $('#getPath').on('click', function() {
+        app.updatePath()
+    })
     $("#myform").submit(function(e) {
         e.preventDefault();
         if( $('#myform').form('is valid') && selectionCheck()) {
@@ -394,7 +455,6 @@ $(document).ready(function() {
                 $('#logButton').addClass('disabled')
                 $('.actions > label')[0].innerText = 'InstaPy running...'
                 $("#terminate").removeClass('disabled').off('click').on('click', function(e) {
-                    console.log('terminate pid: ', pyshell.childProcess.pid)
                     shell.killProcess(pyshell.childProcess.pid)
                 })
 
@@ -402,57 +462,17 @@ $(document).ready(function() {
                 shell.clearLog();
 
                 // Initiate script executing process
-                pyshell = new PythonShell('quickstart.py',{scriptPath:"./", pythonOptions: ['-u']});
-                running = !pyshell.terminated
-                console.log('new pid: ', pyshell.childProcess.pid)
-
-                // Listen to message event and display it to  modal
-                pyshell.on('message', function (message) {
-                    if (message) {
-                        shell.writeLog(message)
-                    }
-                });
-
-                // Listen to process close event, then change modal action content
-                pyshell.on('close', function() {
-                    $('#terminate').addClass('disabled')
-                    $('#logButton').removeClass('disabled')
-                    $('#finish').removeClass('disabled').on('click', function() {
-                        running = !pyshell.terminated
-                        $("#fireButton").removeClass('loading')
-                    })
-                    $('.actions > .loader').hide()
-                    $('.actions > label')[0].innerText = 'InstaPy ended'
-                })
-
-                // Listen to process exit event and terminate the process (since it won't terminate itself)
-                pyshell.childProcess.on('exit', (err) => {
-                    shell.killProcess(pyshell.childProcess.pid)
-                });
-
-                // end the input stream and allow the process to exit 
-                pyshell.end(function (err) {
-                    if (err) {
-                        shell.writeLog(err, 'red')
-                    }
-                });
+                shell.initProcess();
             }
-        } else {
-            console.log('at least place a tag!');
         }
     })
     $('#logButton').click(function() {
         $('.test').modal('show')
         $('.actions > .button').hide()
         $('#logButton').addClass('loading')
-        shell.clearLog()
-
-        var array = fs.readFileSync('logs/logFile.txt').toString().split('\n');
-
-        array.forEach(function(e) {
-            shell.writeLog(e);
-        })
         $('#logButton').removeClass('loading')
+        shell.clearLog()
+        shell.openLog();
     })
-    interval = setInterval(fileCheck(),4000)
+    interval = setInterval(fileCheck(instapyPath),4000)
 });
