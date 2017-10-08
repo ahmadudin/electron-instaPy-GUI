@@ -1,23 +1,27 @@
 {
-  "name": "InstaPy-GUI",
+  "name": "InstaPyGUI",
+  "productName": "InstaPy GUI",
   "version": "1.0.0",
   "description": "A minimal InstaPy GUI",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "build"
   },
-  "repository": "https://github.com/",
+  "repository": "https://github.com/ahmadudin/electron-InstaPy-GUI",
   "keywords": [
-    "Electron"
+    "Electron",
+    "InstaPy",
+    "GUI"
   ],
   "author": "ahmadudin",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "devDependencies": {
-    "electron": "~1.6.2"
+    "electron": "~1.6.2",
+    "electron-builder": "^19.34.2"
   },
   "dependencies": {
     "dedent-js": "^1.0.1",
-    "electron-reload": "^1.2.1",
     "electron-settings": "^3.1.2",
     "electron-store": "^1.3.0",
     "file-exists": "^5.0.0",
@@ -25,5 +29,12 @@
     "jquery": "^3.2.1",
     "python-shell": "^0.4.0",
     "terminate": "^2.1.0"
+  },
+  "build": {
+    "appId": "com.ahmadudin.quickstart",
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
   }
 }
