@@ -7,8 +7,8 @@
 
 InstaPy-GUI is script generator tool based on [Electron](http://electron.atom.io/) to simplify the use of [InstaPy](https://github.com/timgrossmann/InstaPy).
 
-![screen shot 2017-10-09 at 7 53 55 pm](https://raw.githubusercontent.com/ahmadudin/ahmadudin.github.io/master/assets/images/main.png)
-![screen shot 2017-10-09 at 7 53 55 pm](https://github.com/ahmadudin/ahmadudin.github.io/blob/master/assets/images/process.PNG?raw=true)
+![screen shot 2017-10-09 at 7 53 55 pm](https://github.com/ahmadudin/ahmadudin.github.io/blob/master/assets/images/screencapture1.PNG?raw=true)
+![screen shot 2017-10-09 at 7 53 55 pm](https://github.com/ahmadudin/ahmadudin.github.io/blob/master/assets/images/screencapture2.PNG?raw=true)
 InstaPy-GUI shows message logged by script including error and traceback.
 
 ## Installation
