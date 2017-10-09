@@ -23,7 +23,6 @@ InstaPy-GUI shows message logged by script including error and traceback.
 
 ```bash
 $ npm install
-$ npm run setup
 $ npm start
 ```
 
