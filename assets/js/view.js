@@ -4,6 +4,7 @@ const remote = require('electron').remote;
 
 const alpha = document.getElementById('alpha');
 var elementState = 'elementState.';
+var exist = false;
 
 // Listen for checkbox click
 alpha.addEventListener('click', function(event) {
@@ -63,27 +64,31 @@ function displayPath(path) {
     $('#displayPath').val(path)
 }
 
-function fileCheck(path) {
-    fileExists(path.concat('/assets/chromedriver')).then(exists => {
+function fileCheck() {
+    fileExists(instapyPath.concat('/assets/chromedriver')).then(exists => {
         if (exists) {
             $('#driver-missing').hide()
-            fileExists(path.concat('/instapy/instapy.py')).then(exists => {
+            fileExists(instapyPath.concat('/instapy/instapy.py')).then(exists => {
                 if (exists) {
                     $('#instapy-missing').hide()
-                    $('#file-exists').show()
                     $('#file-not-exists').hide()
-                    clearInterval(interval);
+                    if (!exist) {
+                        $('#file-exists').show()
+                        exist = true
+                    }
                 } else {
                     $('#instapy-missing').show()
                     $('#file-exists').hide()
                     $('#file-not-exists').show()
+                    exist = false
                 }
             })
         } else {
             $('#driver-missing').show()
             $('#file-exists').hide()
             $('#file-not-exists').show()
-            fileExists(path.concat('/instapy/instapy.py')).then(exists => {
+            exist = false
+            fileExists(instapyPath.concat('/instapy/instapy.py')).then(exists => {
                 if (exists) {
                     $('#instapy-missing').hide()
                 } else {

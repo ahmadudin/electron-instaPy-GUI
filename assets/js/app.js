@@ -107,7 +107,7 @@ var app = {
     },
     // Write and save Script to local storage
     createScript: function(content) {
-        fs.writeFile(instapyPath.concat('/quickstart.py'), content, (err) => {
+        fs.writeFileSync(instapyPath.concat('/quickstart.py'), content, (err) => {
             if (err) throw err;
         });
     },
@@ -129,8 +129,6 @@ var app = {
         });
         displayPath(path);
         settings.set('instapyPath', path[0]);
-        clearInterval(interval);
-        interval = setInterval(fileCheck(path[0]), 4000);
         instapyPath = path[0];
     }, 
     /* --------- INPUT PROCESSING --------- */
@@ -386,7 +384,8 @@ var shell = {
 
         // Listen to process exit event and terminate the process (since it won't terminate itself)
         pyshell.childProcess.on('exit', (err) => {
-            shell.killProcess(pyshell.childProcess.pid)
+            pyshell.stdout.end()
+            pyshell.stderr.end()
         });
 
         // end the input stream and allow the process to exit 
@@ -397,7 +396,7 @@ var shell = {
         });
     },
     killProcess: function(pid) {
-        terminate(pid, function (err) {
+        terminate(pid, 'SIGINT', function (err) {
             if (err) throw err;
         });
     },
@@ -474,5 +473,7 @@ $(document).ready(function() {
         shell.clearLog()
         shell.openLog();
     })
-    interval = setInterval(fileCheck(instapyPath),4000)
+    setInterval(function() {
+        fileCheck()
+    },3000)
 });
