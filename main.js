@@ -3,9 +3,11 @@ const electron = require('electron')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
+const ipcMain = electron.ipcMain
 
 const path = require('path')
 const url = require('url')
+var close = false;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -33,8 +35,19 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  mainWindow.on('close', (event) => {
+    if (!close) {
+      event.preventDefault();
+      mainWindow.webContents.send('save' , {msg:'hello from main process'});
+    }
+  })
 }
 
+ipcMain.on('exit', () => {
+  close = true;
+  app.quit()
+})
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
