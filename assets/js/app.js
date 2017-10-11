@@ -6,9 +6,12 @@ const dialog = require("electron").remote.require("electron").dialog;
 const ipcRenderer = require("electron").ipcRenderer;
 
 var instapyPath = "";
-var interval;
 var pyshell;
 var running = false;
+var data;
+var option;
+var check;
+var media;
 
 // Initial path based on last usage
 var checkPath = settings.get("instapyPath");
@@ -18,8 +21,8 @@ if (checkPath) {
 }
 
 var params = {
-  check: {
-    restrictTags_on: true,
+  selection: {
+    restrictTags_on: "",
     restrictUsers_on: "",
     excludeFriends_on: "",
     ignoreRestrict_on: "",
@@ -44,47 +47,54 @@ var params = {
     ignoreRestrict: "",
     fLikedPercent: "",
     fLikedTimes: "",
-    commentPercent: "",
+    commentsPercent: "",
     comments: "",
-    commentsMedia: "",
-    commentsEmoji: "",
     upperCount: "",
     lowerCount: "",
     byTagsTags: "",
     byTagsAmount: "",
-    byTagsMedia: "",
     byImgUrl: "",
     byImgAmount: "",
-    byImgMedia: "",
     byLocUrl: "",
     byLocAmount: "",
-    byLocMedia: "",
     fUsersLists: "",
     fFollowersUsers: "",
     fFollowersAmount: "",
     fFollowersDelay: "",
-    fFollowersRandom: "",
     fFollowingUsers: "",
     fFollowingAmount: "",
     fFollowingDelay: "",
-    fFollowingRandom: "",
-    unfollowUsers: "",
-    interactRandom: "",
+    unfollowAmount: "",
     interactAmount: "",
     interactPercent: ""
+  },
+  media: {
+    byLocMedia: "",
+    byTagsMedia: "",
+    byImgMedia: "",
+    commentsMedia: "",
+  },
+  option: {
+    commentsEmoji: "",
+    fFollowingRandom: "",
+    fFollowersRandom: "",
+    interactRandom: "",
   }
 };
 
-var lastParam = settings.get('params')
-if (lastParam) {
-  params = lastParam
-}
+// var lastParam = settings.get('params')
+// if (lastParam) {
+//   params = lastParam
+// }
 
 var app = {
   /* -------- APP METHOD -------- */
   // Compiling python script
   compileScript: function() {
-    var check = params.check;
+    data = settings.get('data');
+    option = settings.get('option');
+    check = settings.get('elementState');
+    media = settings.get('media');
     var identity = app.identity();
     var restrictTag = app.restrictTags(check.restrictTags_on);
     var restrictUser = app.restrictUsers(check.restrictUsers_on);
@@ -110,6 +120,7 @@ var app = {
             ${restrictTag}${restrictUser}${excludeFriends}${ignoreRestrict}${fLiked}${comments}${followCount}${interact}${byTags}${byImages}${byLocations}${fFollowers}${fFollowing}${fUsers}${unfollowUsers}
             \nsession.end()
         `);
+        
     return content;
   },
   // Write and save Script to local storage
@@ -131,10 +142,26 @@ var app = {
     return parsed;
   },
   // Updating checkboxes value
-  updateParams: function() {
-    for (var i in params.check) {
-      params.check[i] = $("#" + i).is(":checked");
+  // updateActivity: function() {
+  //   for (var i in params.selection) {
+  //     params.check[i] = $("#" + i).is(":checked");
+  //   }
+  // },
+  updateData: function() {
+    for (var i in params.data) {
+      params.data[i] = $('#'+i).val()
     }
+    settings.set('data', params.data)
+
+    for (var i in params.option) {
+      params.option[i] = $('#' + i).is(':checked')
+    }
+    settings.set('option', params.option)
+
+    for (var i in params.media) {
+      params.media[i] = $(`input[name=${i}]:checked`).val()
+    }
+    settings.set('media', params.media)
   },
   updatePath: function() {
     path = dialog.showOpenDialog({
@@ -146,17 +173,14 @@ var app = {
   },
   /* --------- INPUT PROCESSING --------- */
   identity: function() {
-    params.username = $("#username").val();
-    params.password = $("#password").val();
-    var content = `\nsession = InstaPy(username='${params.username}', password='${params.password}')`;
+    var content = `\nsession = InstaPy(username='${data.username}', password='${data.password}')`;
     return content;
   },
   restrictTags: function(on) {
     var content = ``;
 
     if (on) {
-      params.restrictTags = this.parser($("#restrictTags").val());
-      content = `\nsession.set_dont_like([${params.restrictTags}])`;
+      content = `\nsession.set_dont_like([${this.parser(data.restrictTags)}])`;
     }
 
     return content;
@@ -165,8 +189,7 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.restrictUsers = this.parser($("#restrictUsers").val());
-      content = `\nsession.set_ignore_users([${params.restrictUsers}])`;
+      content = `\nsession.set_ignore_users([${this.parser(data.restrictUsers)}])`;
     }
 
     return content;
@@ -175,8 +198,7 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.excludeFriends = this.parser($("#excludeFriends").val());
-      content = `\nsession.set_dont_include([${params.excludeFriends}])`;
+      content = `\nsession.set_dont_include([${this.parser(data.excludeFriends)}])`;
     }
 
     return content;
@@ -185,8 +207,7 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.ignoreRestrict = this.parser($("#ignoreRestrict").val());
-      content = `\nsession.set_ignore_if_contains([${params.ignoreRestrict}])\n`;
+      content = `\nsession.set_ignore_if_contains([${this.parser(data.ignoreRestrict)}])\n`;
     }
 
     return content;
@@ -195,14 +216,8 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.interactAmount = $("#fLikedPercent").val();
-      params.interactPercent = $("#fLikedTimes").val();
-      if ($("#interactRandom").val()) {
-        params.interactRandom = "True";
-      } else {
-        params.interactRandom = "False";
-      }
-      content = `\nsession.set_user_interact(amount=${params.interactAmount}, random=${params.interactRandom}, percentage=${params.interactPercent})\n`;
+      
+      content = `\nsession.set_user_interact(amount=${data.interactAmount}, random=${data.interactRandom}, percentage=${data.interactPercent})\n`;
     }
 
     return content;
@@ -211,28 +226,22 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.fLikedPercent = $("#fLikedPercent").val();
-      params.fLikedTimes = $("#fLikedTimes").val();
-      content = `\nsession.set_do_follow(enabled=True, percentage=${params.fLikedPercent}, times=${params.fLikedTimes})`;
+      content = `\nsession.set_do_follow(enabled=True, percentage=${data.fLikedPercent}, times=${data.fLikedTimes})`;
     }
 
     return content;
   },
   comments: function(on) {
     var content = ``;
+    var value = "None";
 
     if (on) {
-      params.comments = this.parser($("#comments").val());
-      params.commentsPercent = $("#commentsPercent").val();
+      
+      if (media.commentsMedia != value) {
+        value = `'${media.commentsMedia}'`;
+      } 
 
-      if ($("#byImgMedia").val() === 1) {
-        params.commentsMedia = "'Photo'";
-      } else if ($("#commentsMedia").val() === 2) {
-        params.commentsMedia = "'Video'";
-      } else {
-        params.commentsMedia = "None";
-      }
-      content = `\nsession.set_do_comment(enabled=True, percentage=${params.commentsPercent})\nsession.set_comments([${params.comments}], media=${params.commentsMedia})`;
+      content = `\nsession.set_do_comment(enabled=True, percentage=${params.commentsPercent})\nsession.set_comments([${params.comments}], media=${value})`;
     }
 
     return content;
@@ -241,9 +250,7 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.upperCount = $("#upperCount").val();
-      params.lowerCount = $("#lowerCount").val();
-      content = `\nsession.set_upper_follower_count(limit = ${params.upperCount})\nsession.set_lower_follower_count(limit = ${params.lowerCount})`;
+      content = `\nsession.set_upper_follower_count(limit = ${data.upperCount})\nsession.set_lower_follower_count(limit = ${data.lowerCount})`;
     }
 
     return content;
@@ -253,19 +260,10 @@ var app = {
     var interact = "False";
 
     if (on) {
-      params.fFollowersUsers = this.parser($("#fFollowersUsers").val());
-      params.fFollowersAmount = $("#fFollowersAmount").val();
-      params.fFollowersDelay = $("#fFollowersDelay").val();
-
-      if ($("#fFollowersRandom").checked) {
-        params.fFollowersRandom = "True";
-      } else {
-        params.fFollowersRandom = "False";
-      }
-      if (params.check.interact_on) {
+      if (check.interact_on) {
         interact = "True";
       }
-      content = `\nsession.follow_user_followers([${params.fFollowersUsers}], amount=${params.fFollowersAmount}, delay=${params.fFollowersDelay}, random=${params.fFollowersRandom}, interact=${interact})`;
+      content = `\nsession.follow_user_followers([${this.parser(data.fFollowersUsers)}], amount=${data.fFollowersAmount}, delay=${data.fFollowersDelay}, random=${option.fFollowersRandom}, interact=${interact})`;
     }
 
     return content;
@@ -275,19 +273,10 @@ var app = {
     var interact = "False";
 
     if (on) {
-      params.fFollowingUsers = this.parser($("#fFollowingUsers").val());
-      params.fFollowingAmount = $("#fFollowingAmount").val();
-      params.fFollowingDelay = $("#fFollowingDelay").val();
-
-      if ($("#fFollowersRandom").checked) {
-        params.fFollowingRandom = "True";
-      } else {
-        params.fFollowingRandom = "False";
-      }
-      if (params.check.interact_on) {
+      if (check.interact_on) {
         interact = "True";
       }
-      content = `\nsession.follow_user_following([${params.fFollowingUsers}], amount=${params.fFollowingAmount}, delay=${params.fFollowingDelay}, random=${params.fFollowingRandom}, interact=${interact})`;
+      content = `\nsession.follow_user_following([${this.parser(data.fFollowingUsers)}], amount=${data.fFollowingAmount}, delay=${data.fFollowingDelay}, random=${option.fFollowingRandom}, interact=${interact})`;
     }
 
     return content;
@@ -296,8 +285,7 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.fUsers = this.parser($("#fUsersLists").val());
-      content = `\nsession.follow_by_list([${params.fUsers}], times=1)`;
+      content = `\nsession.follow_by_list([${ this.parser(data.fUsers)}], times=1)`;
     }
 
     return content;
@@ -306,65 +294,46 @@ var app = {
     var content = ``;
 
     if (on) {
-      params.unfollowAmount = $("#unfollowAmount").val();
-      content = `\nsession.unfollow_users(amount=${params.unfollowAmount})`;
+      content = `\nsession.unfollow_users(amount=${data.unfollowAmount})`;
     }
 
     return content;
   },
   byTags: function(on) {
     var content = ``;
+    var value = 'None';
 
     if (on) {
-      params.byTagsTags = this.parser($("#byTagsTags").val());
-      params.byTagsAmount = $("#byTagsAmount").val();
-
-      if ($("input[name=byTagsMedia]:checked").val() === "Photo") {
-        params.byTagsMedia = "'Photo'";
-      } else if ($("input[name=byTagsMedia]:checked").val() === "Video") {
-        params.byTagsMedia = "'Video'";
-      } else {
-        params.byTagsMedia = "None";
-      }
-      content = `\nsession.like_by_tags([${params.byTagsTags}], amount=${params.byTagsAmount}, media=${params.byTagsMedia})`;
+      if (media.byTagsMedia != value) {
+        value = `'${media.byTagsMedia}'`;
+      } 
+      content = `\nsession.like_by_tags([${this.parser(data.byTagsTags)}], amount=${data.byTagsAmount}, media=${value})`;
     }
 
     return content;
   },
   byImages: function(on) {
     var content = ``;
+    var value = 'None';
 
     if (on) {
-      params.byImgUrl = this.parser($("#byImgUrl").val());
-      params.byImgAmount = $("#byImgAmount").val();
-
-      if ($("input[name=byImgMedia]:checked").val() === "1") {
-        params.byImgMedia = "'Photo'";
-      } else if ($("input[name=byImgMedia]:checked").val() === "2") {
-        params.byImgMedia = "'Video'";
-      } else {
-        params.byImgMedia = "None";
-      }
-      content = `\nsession.like_from_image([${params.byImgUrl}], amount=${params.byImgAmount}, media=${params.byImgMedia})`;
+      if (media.byImgMedia != value) {
+        value = `'${media.byImgMedia}'`;
+      } 
+      content = `\nsession.like_from_image([${this.parser(data.byImgUrl)}], amount=${data.byImgAmount}, media=${value})`;
     }
 
     return content;
   },
   byLocations: function(on) {
     var content = ``;
+    var value = 'None';
 
     if (on) {
-      params.byLocUrl = this.parser($("#byLocUrl").val());
-      params.byLocAmount = $("#byLocAmount").val();
-
-      if ($("input[name=byLocMedia]:checked").val() === "1") {
-        params.byLocMedia = "'Photo'";
-      } else if ($("input[name=byLocMedia]:checked").val() === "2") {
-        params.byLocMedia = "'Video'";
-      } else {
-        params.byLocMedia = "None";
-      }
-      content = `\nsession.like_by_locations([${params.byLocUrl}], amount=${params.byLocAmount}, media=${params.byLocMedia})\n`;
+      if (media.byLocMedia != value) {
+        value = `'${media.byLocMedia}'`;
+      } 
+      content = `\nsession.like_by_locations([${this.parser(data.byLocUrl)}], amount=${data.byLocAmount}, media=${value})\n`;
     }
 
     return content;
@@ -457,43 +426,57 @@ var shell = {
 // Interface interaction handler
 var handler = {
   submit: function() {
-    app.updateParams();
+    app.updateData();
     app.createScript(app.compileScript());
   }
 };
 
 $(document).ready(function() {
+  // Check app last settings and apply settings
+  lastSelectionState(settings.get('elementState'))
+  lastDataState(settings.get('data'))
+  lastDataState(settings.get('media'))
+  lastDataState(settings.get('option'))
+
+  // Updating InstaPy path 
   $("#getPath").on("click", function() {
     app.updatePath();
   });
+
+  // RUN button delegation 
   $("#myform").submit(function(e) {
     e.preventDefault();
     if ($("#myform").form("is valid") && selectionCheck()) {
       handler.submit();
-      // $(".test").modal("show");
-      // $(".actions > .button").show();
-      // if (!running) {
-      //   $("#fireButton").addClass("loading");
-      //   $(".actions > .loader").show();
-      //   $("#terminate");
-      //   $("#finish").addClass("disabled");
-      //   $("#logButton").addClass("disabled");
-      //   $(".actions > label")[0].innerText = "InstaPy running...";
-      //   $("#terminate")
-      //     .removeClass("disabled")
-      //     .off("click")
-      //     .on("click", function(e) {
-      //       shell.killProcess(pyshell.childProcess.pid);
-      //     });
 
-      //   // Clear modal content
-      //   shell.clearLog();
+      $(".test").modal("show");
+      $(".actions > .button").show();
 
-      //   // Initiate script executing process
-      //   shell.initProcess();
-      // }
+      // Will not start new session before the last session ended 
+      if (!running) {
+        $("#fireButton").addClass("loading");
+        $(".actions > .loader").show();
+        $("#terminate");
+        $("#finish").addClass("disabled");
+        $("#logButton").addClass("disabled");
+        $(".actions > label")[0].innerText = "InstaPy running...";
+        $("#terminate")
+          .removeClass("disabled")
+          .off("click")
+          .on("click", function(e) {
+            shell.killProcess(pyshell.childProcess.pid);
+          });
+
+        // Clear modal content
+        shell.clearLog();
+
+        // Initiate new script executing process
+        shell.initProcess();
+      }
     }
   });
+
+  // Open instaPy logFile.txt 
   $("#logButton").click(function() {
     $(".test").modal("show");
     $(".actions > .button").hide();
@@ -503,13 +486,15 @@ $(document).ready(function() {
     shell.openLog();
   });
 
+  // Checking if dependecy is exist 
   setInterval(function() {
     fileCheck();
   }, 2000);
-  
+
+  // Listen signal from main process to save settings before app closed 
   ipcRenderer.on('save' , function(event){
     handler.submit();
-    settings.set('params', params)
+    app.updateData();
     ipcRenderer.sendSync('exit')
   });
 });

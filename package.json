@@ -1,7 +1,7 @@
 {
   "name": "InstaPyGUI",
   "productName": "InstaPy GUI",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "A minimal InstaPy GUI",
   "main": "main.js",
   "scripts": {

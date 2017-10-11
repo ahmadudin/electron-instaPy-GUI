@@ -26,29 +26,27 @@ document.getElementById("exit-btn").addEventListener("click", function(e) {
   window.close();
 });
 
-// Initial view based on last usage
-var state = settings.get('elementState');
-if (state) {
-  for (var i in state) {
-    document.getElementById(i).click();
+function lastSelectionState(state) {
+  if (state) {
+    for (var i in state) {
+      document.getElementById(i).click();
+    }
+  } else {
+    document.getElementById("byTags_on").click();
   }
-} else {
-  document.getElementById("byTags_on").click();
 }
 
-var formVal = settings.get('params');
-
-console.log(settings.getAll())
-if (formVal) {
-  for (var i in formVal) {
-    if (!formVal[i]) continue;
-    console.log(i, ': ',formVal[i])
-    $('#myform')
-      // set several values
-      .form('set values', {
-        [i]     : formVal[i],
-      })
-    ;
+function lastDataState(data) {
+  if (data) {
+    for (var i in data) {
+      if (!data[i]) continue;
+      $('#myform')
+        // set several values
+        .form('set values', {
+          [i]     : data[i],
+        })
+      ;
+    }
   }
 }
 
