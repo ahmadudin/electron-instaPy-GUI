@@ -60,7 +60,7 @@
         "AppImage",
         "deb"
       ],
-      "icon": "256x256.png"
+      "icon": "build/256x256.png"
     }
   }
 }
