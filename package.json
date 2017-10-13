@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "build -mwl"
+    "dist": "build",
+    "dist-x": "build -ml"
   },
   "repository": "https://github.com/ahmadudin/electron-InstaPy-GUI",
   "keywords": [
