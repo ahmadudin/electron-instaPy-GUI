@@ -40,12 +40,11 @@ function lastDataState(data) {
   if (data) {
     for (var i in data) {
       if (!data[i]) continue;
-      $('#myform')
+      $("#myform")
         // set several values
-        .form('set values', {
-          [i]     : data[i],
-        })
-      ;
+        .form("set values", {
+          [i]: data[i]
+        });
     }
   }
 }
