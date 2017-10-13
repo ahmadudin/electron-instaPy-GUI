@@ -15,7 +15,11 @@
     "InstaPy",
     "GUI"
   ],
-  "author": "ahmadudin",
+  "author": {
+    "name": "ahmadudin",
+    "email": "ahmed.shalahuddin@gmail.com",
+    "url": "https://github.com/ahmadudin"
+  },
   "license": "MIT",
   "devDependencies": {
     "electron": "~1.6.2",
