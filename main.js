@@ -5,6 +5,8 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const ipcMain = electron.ipcMain
 
+const menu = electron.Menu
+
 const path = require('path')
 const url = require('url')
 var close = false;
@@ -51,7 +53,50 @@ ipcMain.on('exit', () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+  if (process.platform === 'darwin') {
+    var template = [{
+      label: 'FromScratch',
+      submenu: [{
+        label: 'Quit',
+        accelerator: 'CmdOrCtrl+Q',
+        click: function() { app.quit(); }
+      }]
+    }, {
+      label: 'Edit',
+      submenu: [{
+        label: 'Undo',
+        accelerator: 'CmdOrCtrl+Z',
+        selector: 'undo:'
+      }, {
+        label: 'Redo',
+        accelerator: 'Shift+CmdOrCtrl+Z',
+        selector: 'redo:'
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        selector: 'cut:'
+      }, {
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        selector: 'copy:'
+      }, {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        selector: 'paste:'
+      }, {
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        selector: 'selectAll:'
+      }]
+    }];
+    var osxMenu = menu.buildFromTemplate(template);
+    menu.setApplicationMenu(osxMenu);
+  }
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
