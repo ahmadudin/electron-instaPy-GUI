@@ -12,7 +12,7 @@ InstaPy-GUI is script generator tool based on [Electron](http://electron.atom.io
 InstaPy-GUI shows message logged by script including error and traceback.
 
 ## Installation
-  You can download an archive from following this [link](#).
+  You can download an archive from following this [link](https://github.com/ahmadudin/electron-instaPy-GUI/releases).
 
 ## Usage
 * Open the app

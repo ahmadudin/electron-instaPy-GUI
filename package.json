@@ -57,7 +57,6 @@
     "linux": {
       "category": "Utilty",
       "target": [
-        "AppImage",
         "deb"
       ],
       "icon": "build/"
