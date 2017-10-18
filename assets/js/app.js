@@ -270,7 +270,7 @@ var app = {
       }
       content = `\nsession.follow_user_followers([${this.parser(
         data.fFollowersUsers
-      )}], amount=${data.fFollowersAmount}, delay=${data.fFollowersDelay}, random=${random}, interact=${interact})`;
+      )}], amount=${data.fFollowersAmount}, sleep_delay=${data.fFollowersDelay}, random=${random}, interact=${interact})`;
     }
 
     return content;
@@ -289,7 +289,7 @@ var app = {
       }
       content = `\nsession.follow_user_following([${this.parser(
         data.fFollowingUsers
-      )}], amount=${data.fFollowingAmount}, delay=${data.fFollowingDelay}, random=${random}, interact=${interact})`;
+      )}], amount=${data.fFollowingAmount}, sleep_delay=${data.fFollowingDelay}, random=${random}, interact=${interact})`;
     }
 
     return content;
