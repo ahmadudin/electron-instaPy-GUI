@@ -4,6 +4,7 @@ const PythonShell = require("python-shell");
 const terminate = require("terminate");
 const dialog = require("electron").remote.require("electron").dialog;
 const ipcRenderer = require("electron").ipcRenderer;
+const jsesc = require('jsesc');
 
 var instapyPath = "";
 var pyshell;
@@ -242,7 +243,20 @@ var app = {
         value = `'${media.commentsMedia}'`;
       }
 
-      content = `\nsession.set_do_comment(enabled=True, percentage=${data.commentsPercent})\nsession.set_comments([${data.comments}], media=${value})`;
+      // Escape to handle non-ascii input.
+      var escapedComments = jsesc(data.comments, {
+        'quotes': 'double'
+      })
+
+      // Add `u`(Python unicode indentifier) beginning of each comment.
+      escapedComments = 
+        'u' + 
+        escapedComments
+          .replace(/\s+/g, "")
+          .split("',")
+          .join("', u");
+
+      content = `\nsession.set_do_comment(enabled=True, percentage=${data.commentsPercent})\nsession.set_comments([${escapedComments}], media=${value})`;
     }
 
     return content;
