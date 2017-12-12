@@ -65,6 +65,9 @@ var params = {
     fFollowingAmount: "",
     fFollowingDelay: "",
     unfollowAmount: "",
+    unfollowMethod: "",
+    unfollowOrder: "",
+    unfollowDelay: "",
     interactAmount: "",
     interactPercent: ""
   },
@@ -219,7 +222,7 @@ var app = {
       if (option.interactRandom) {
         random = "True";
       }
-      content = `\nsession.set_user_interact(amount=${data.interactAmount}, random=${random}, percentage=${data.interactPercent})\n`;
+      content = `\nsession.set_user_interact(amount=${data.interactAmount}, randomize=${random}, percentage=${data.interactPercent})\n`;
     }
 
     return content;
@@ -270,7 +273,7 @@ var app = {
       }
       content = `\nsession.follow_user_followers([${this.parser(
         data.fFollowersUsers
-      )}], amount=${data.fFollowersAmount}, sleep_delay=${data.fFollowersDelay}, random=${random}, interact=${interact})`;
+      )}], amount=${data.fFollowersAmount}, sleep_delay=${data.fFollowersDelay}, randomize=${random}, interact=${interact})`;
     }
 
     return content;
@@ -289,7 +292,7 @@ var app = {
       }
       content = `\nsession.follow_user_following([${this.parser(
         data.fFollowingUsers
-      )}], amount=${data.fFollowingAmount}, sleep_delay=${data.fFollowingDelay}, random=${random}, interact=${interact})`;
+      )}], amount=${data.fFollowingAmount}, sleep_delay=${data.fFollowingDelay}, randomize=${random}, interact=${interact})`;
     }
 
     return content;
@@ -307,9 +310,19 @@ var app = {
   },
   unfollowUsers: function(on) {
     var content = ``;
-
     if (on) {
-      content = `\nsession.unfollow_users(amount=${data.unfollowAmount})`;
+		if (data.unfollowMethod == "InstaPy") {
+			var instaPyMode = `'${data.unfollowMethod}'`;
+			var onlyInstaPyMode = "True";
+    		content = `\nsession.unfollow_users(amount=${data.unfollowAmount}, onlyInstapyFollowed=${onlyInstaPyMode}, onlyInstapyMethod:${instaPyMode}, sleep_delay=${data.unfollowDelay})`;
+		}
+		else if (data.unfollowMethod == "NotFollowing") {
+			var onlyNotMode = "True";
+    		content = `\nsession.unfollow_users(amount=${data.unfollowAmount}, onlyNotFollowMe=${onlyNotMode}, sleep_delay=${data.unfollowDelay})`;
+		}
+		else {
+    		content = `\nsession.unfollow_users(amount=${data.unfollowAmount}, sleep_delay=${data.unfollowDelay})`;
+		}
     }
 
     return content;
