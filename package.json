@@ -33,7 +33,8 @@
     "fs-jetpack": "^1.2.0",
     "jquery": "^3.2.1",
     "python-shell": "^0.4.0",
-    "terminate": "^2.1.0"
+    "terminate": "^2.1.0",
+    "jsesc": "^0.3.0"
   },
   "build": {
     "appId": "com.ahmadudin.instapygui",
