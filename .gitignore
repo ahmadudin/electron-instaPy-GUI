@@ -2,3 +2,5 @@
 node_modules/
 
 sketch\.txt
+
+package-lock.json

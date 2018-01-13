@@ -484,9 +484,40 @@
                                 <div class="one wide field">
                                     <label>Users</label>
                                 </div>
-                                <div class="fourteen wide field">
+                                <div class="three wide field">
                                     <div class="ui mini input">
                                         <input id="unfollowAmount" type="number" placeholder="30">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="unfollowMethod" value="InstaPy">
+                                            <label>InstaPy</label>
+                                            </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="unfollowMethod" value="NotFollowing">
+                                            <label>Not Following</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="unfollowMethod" checked="checked" value="None">
+                                            <label>None</label>
+                                    </div>
+                                </div>
+                                <div class="four wide field">
+                                    <div class="ui mini input">
+                                        <input id="unfollowOrder" type="text" placeholder="InstaPy only (FIFO/LIFO)">
+                                    </div>
+                                </div>
+                                <div class="one wide field">
+                                    <label>Delay(s)</label>
+                                </div>
+                                <div class="field">
+                                    <div class="ui mini input">
+                                        <input id="unfollowDelay" type="text" placeholder="10">
                                     </div>
                                 </div>
                             </div>
