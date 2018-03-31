@@ -7,6 +7,7 @@ const ipcRenderer = require("electron").ipcRenderer;
 const jsesc = require('jsesc');
 
 var instapyPath = "";
+var pythonPath = "";
 var pyshell;
 var running = false;
 var data;
@@ -19,6 +20,11 @@ var checkPath = settings.get("instapyPath");
 if (checkPath) {
   instapyPath = checkPath;
   displayPath(checkPath);
+}
+var checkPythonPath = settings.get("pythonPath");
+if (checkPythonPath) {
+  pythonPath = checkPythonPath;
+  displayPythonPath(checkPythonPath)
 }
 
 var params = {
@@ -324,8 +330,7 @@ var app = {
   },
   unfollowUsers: function(on) {
     var content = ``;
-    if (on) {
-		if (data.unfollowMethod == "InstaPy") {
+    if (on) { if (data.unfollowMethod == "InstaPy") {
 			var instaPyMode = `'${data.unfollowMethod}'`;
 			var onlyInstaPyMode = "True";
     		content = `\nsession.unfollow_users(amount=${data.unfollowAmount}, onlyInstapyFollowed=${onlyInstaPyMode}, onlyInstapyMethod:${instaPyMode}, sleep_delay=${data.unfollowDelay})`;
@@ -391,8 +396,9 @@ var app = {
 var shell = {
   initProcess: function() {
     pyshell = new PythonShell("quickstart.py", {
+      pythonPath: (pythonPath.length > 2) ? pythonPath : undefined,
       pythonOptions: ["-u"],
-      cwd: instapyPath
+      scriptPath: instapyPath + '/'
     });
     running = !pyshell.terminated;
 

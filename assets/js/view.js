@@ -83,6 +83,14 @@ function displayPath(path) {
   $("#displayPath").val(path);
 }
 
+// on input changepython path
+$('#pythonPath').on("change", function(event) {
+  settings.set("pythonPath", event.target.value); 
+});
+function displayPythonPath(path) {
+  $("#pythonPath").val(path);
+}
+
 function fileCheck() {
   fileExists(instapyPath.concat("/assets/chromedriver")).then(exists => {
     if (exists) {
