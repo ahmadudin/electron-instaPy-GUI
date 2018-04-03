@@ -137,9 +137,8 @@ var app = {
     var parsed =
       "'" +
       input
-        .replace(/\s+/g, "")
-        .split(",")
-        .join("', '") +
+        .trim()
+        .replace(/\s*,\s*/g, "', '") +
       "'";
 
     return parsed;
@@ -252,12 +251,11 @@ var app = {
       })
 
       // Add `u`(Python unicode indentifier) beginning of each comment.
-      escapedComments = 
+      escapedComments =
         'u' + 
         escapedComments
-          .replace(/\s+/g, "")
-          .split("',")
-          .join("', u");
+          .trim()
+          .replace(/'\s*,\s*'/, "', u'");
 
       content = `\nsession.set_do_comment(enabled=True, percentage=${data.commentsPercent})\nsession.set_comments([${escapedComments}], media=${value})`;
     }
