@@ -1,3 +1,7 @@
+> **Note:** This project is deprecated and should not be used anymore. Please refer to and use the [updated and new official InstaPy GUI](https://github.com/breuerfelix/instapy-gui)!
+
+<br />
+
 # InstaPy-GUI
 
 [![Version](https://img.shields.io/badge/version-0.5.0-green.svg)](#)
